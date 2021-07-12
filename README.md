@@ -1,6 +1,8 @@
 # Swift Identified Collections
 
 [![CI](https://github.com/pointfreeco/swift-identified-collections/workflows/CI/badge.svg)](https://actions-badge.atrox.dev/pointfreeco/swift-identified-collections/goto)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpointfreeco%2Fswift-identified-collections%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/pointfreeco/swift-identified-collections)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpointfreeco%2Fswift-identified-collections%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/pointfreeco/swift-identified-collections)
 
 A library of data structures for working with collections of identifiable elements in an ergonomic, performant way.
 
@@ -186,9 +188,9 @@ Identified arrays are designed to integrate with SwiftUI applications, as well a
 
 `IdentifiedArray` is a lightweight wrapper around the [`OrderedDictionary`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedDictionary.md) type from Apple's [Swift Collections](https://github.com/apple/swift-collections). It shares many of the same performance characteristics and design considerations, but is better adapted to solving the problem of holding onto a collection of _identifiable_ elements in your application's state.
 
-`IdentifiedArray` does not expose any of the details of `OrderedDictionary` that may lead to breaking invariants. For example an `OrderedDictionary<ID, Identifiable>` may freely hold a value whose identifier does not match its key or mulitple values could have the same id, and `IdentifiedArray` does not allow for these situations.
+`IdentifiedArray` does not expose any of the details of `OrderedDictionary` that may lead to breaking invariants. For example an `OrderedDictionary<ID, Identifiable>` may freely hold a value whose identifier does not match its key or multiple values could have the same id, and `IdentifiedArray` does not allow for these situations.
 
-And unlike [`OrderedSet`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedSet.md), `IdentifiedArray` does not require that its `Element` type conforms to `Hashable` protocol, which may be difficult or impossible to do, and introduces questions around the quality of hashing, etc.
+And unlike [`OrderedSet`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedSet.md), `IdentifiedArray` does not require that its `Element` type conforms to the `Hashable` protocol, which may be difficult or impossible to do, and introduces questions around the quality of hashing, etc.
 
 `IdentifiedArray` does not even require that its `Element` conforms to `Identifiable`. Just as SwiftUI's `List` and `ForEach` views take an `id` key path to an element's identifier, `IdentifiedArray`s can be constructed with a key path:
 
