@@ -76,7 +76,7 @@ extension IdentifiedArray {
   ///   elements in the collection.
   /// - Complexity: O(`count`).
   @inlinable
-  public mutating func removeFirst(n: Int) {
+  public mutating func removeFirst(_ n: Int) {
     self._dictionary.removeFirst(n)
   }
 
