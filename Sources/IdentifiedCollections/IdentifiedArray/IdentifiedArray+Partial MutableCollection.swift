@@ -16,7 +16,9 @@ extension IdentifiedArray {
   public mutating func partition(
     by belongsInSecondPartition: (Element) throws -> Bool
   ) rethrows -> Int {
-    try self._dictionary.values.partition(by: belongsInSecondPartition)
+    try self._dictionary.partition { (_, value) in
+      try belongsInSecondPartition(value)
+    }
   }
 
   /// Reverses the elements of the array in place.
