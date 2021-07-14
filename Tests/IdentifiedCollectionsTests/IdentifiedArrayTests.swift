@@ -177,6 +177,19 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual(array, [0, 1, 2, 3])
   }
 
+  func testPartition() {
+    var array: IdentifiedArray = [1, 2]
+
+    let index = array.partition { $0.id == 1 }
+
+    XCTAssertEqual(index, 1)
+    XCTAssertEqual(array, [2, 1])
+
+    for id in array.ids {
+      XCTAssertEqual(id, array[id: id]?.id)
+    }
+  }
+
   #if canImport(SwiftUI)
     func testMoveFromOffsetsToOffset() {
       var array: IdentifiedArray = [1, 2, 3]
