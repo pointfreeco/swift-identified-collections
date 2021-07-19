@@ -314,6 +314,13 @@ public struct IdentifiedArray<ID, Element> where ID: Hashable {
   @inline(__always)
   public var ids: OrderedSet<ID> { self._dictionary.keys }
 
+  /// A read-only collection view for the elements contained in this array, as an `Array`.
+  ///
+  /// - Complexity: O(1)
+  @inlinable
+  @inline(__always)
+  public var elements: [Element] { self._dictionary.values.elements }
+
   @usableFromInline
   init(
     id: KeyPath<Element, ID>,

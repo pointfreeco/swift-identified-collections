@@ -4,18 +4,28 @@ import XCTest
 
 extension Int: Identifiable { public var id: Self { self } }
 
+private struct User: Equatable, Identifiable {
+  let id: Int
+  var name: String
+}
+
 final class IdentifiedArrayTests: XCTestCase {
   func testIds() {
     let array: IdentifiedArray = [1, 2, 3]
     XCTAssertEqual(array.ids, [1, 2, 3])
   }
 
-  func testSubscriptId() {
-    struct User: Equatable, Identifiable {
-      let id: Int
-      var name: String
-    }
+  func testElements() {
+    let array: IdentifiedArray = [
+      User(id: 1, name: "Blob"),
+      User(id: 2, name: "Blob, Jr."),
+      User(id: 3, name: "Blob, Sr."),
+    ]
 
+    XCTAssertEqual(array.elements, array.map { $0 })
+  }
+
+  func testSubscriptId() {
     var array: IdentifiedArray = [
       User(id: 1, name: "Blob"),
       User(id: 2, name: "Blob, Jr."),
