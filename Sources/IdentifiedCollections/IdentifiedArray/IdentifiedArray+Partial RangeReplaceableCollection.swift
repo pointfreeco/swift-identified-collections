@@ -1,14 +1,17 @@
-extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
-  /// Creates an empty array.
-  ///
-  /// This initializer is equivalent to initializing with an empty array literal.
-  ///
-  /// - Complexity: O(1)
-  @inlinable
-  public init() {
-    self.init(id: \.id, _id: { $0.id }, _dictionary: .init())
+#if compiler(>=5.3)
+  @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
+  extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
+    /// Creates an empty array.
+    ///
+    /// This initializer is equivalent to initializing with an empty array literal.
+    ///
+    /// - Complexity: O(1)
+    @inlinable
+    public init() {
+      self.init(id: \.id, _id: { $0.id }, _dictionary: .init())
+    }
   }
-}
+#endif
 
 extension IdentifiedArray {
   /// Removes and returns the element at the specified position.

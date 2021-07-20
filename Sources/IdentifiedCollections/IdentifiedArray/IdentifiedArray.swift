@@ -423,12 +423,15 @@ public struct IdentifiedArray<ID, Element> where ID: Hashable {
   }
 }
 
-/// A convenience type alias that specifies an ``IdentifiedArray`` by an element conforming to the
-/// `Identifiable` protocol.
-///
-/// ```swift
-/// struct User: Identifiable { var id: String }
-/// var users: IdentifiedArrayOf<User> = []
-/// ```
-public typealias IdentifiedArrayOf<Element> = IdentifiedArray<Element.ID, Element>
-where Element: Identifiable
+#if compiler(>=5.3)
+  /// A convenience type alias that specifies an ``IdentifiedArray`` by an element conforming to the
+  /// `Identifiable` protocol.
+  ///
+  /// ```swift
+  /// struct User: Identifiable { var id: String }
+  /// var users: IdentifiedArrayOf<User> = []
+  /// ```
+  @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
+  public typealias IdentifiedArrayOf<Element> = IdentifiedArray<Element.ID, Element>
+  where Element: Identifiable
+#endif

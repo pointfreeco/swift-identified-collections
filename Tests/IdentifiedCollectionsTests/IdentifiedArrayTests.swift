@@ -66,24 +66,28 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual(array, [1, 3])
   }
 
-  func testCodable() {
-    let array: IdentifiedArray = [1, 2, 3]
-    XCTAssertEqual(
-      try JSONDecoder().decode(IdentifiedArray.self, from: JSONEncoder().encode(array)),
-      array
-    )
-    XCTAssertEqual(
-      try JSONDecoder().decode(IdentifiedArray.self, from: Data("[1,2,3]".utf8)),
-      array
-    )
-    XCTAssertThrowsError(
-      try JSONDecoder().decode(IdentifiedArrayOf<Int>.self, from: Data("[1,1,1]".utf8))
-    ) { error in
-      guard case let DecodingError.dataCorrupted(ctx) = error
-      else { return XCTFail() }
-      XCTAssertEqual(ctx.debugDescription, "Duplicate element at offset 1")
+  #if swift(>=5.3)
+    func testCodable() {
+      if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
+        let array: IdentifiedArray = [1, 2, 3]
+        XCTAssertEqual(
+          try JSONDecoder().decode(IdentifiedArray.self, from: JSONEncoder().encode(array)),
+          array
+        )
+        XCTAssertEqual(
+          try JSONDecoder().decode(IdentifiedArray.self, from: Data("[1,2,3]".utf8)),
+          array
+        )
+        XCTAssertThrowsError(
+          try JSONDecoder().decode(IdentifiedArrayOf<Int>.self, from: Data("[1,1,1]".utf8))
+        ) { error in
+          guard case let DecodingError.dataCorrupted(ctx) = error
+          else { return XCTFail() }
+          XCTAssertEqual(ctx.debugDescription, "Duplicate element at offset 1")
+        }
+      }
     }
-  }
+  #endif
 
   func testCustomDebugStringConvertible() {
     let array: IdentifiedArray = [1, 2, 3]
@@ -109,25 +113,35 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual(Set([array]), Set([array, array]))
   }
 
-  func testInitUncheckedUniqueElements() {
-    let array = IdentifiedArray(uncheckedUniqueElements: [1, 2, 3])
-    XCTAssertEqual(array, [1, 2, 3])
-  }
+  #if compiler(>=5.3)
+    func testInitUncheckedUniqueElements() {
+      if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
+        let array = IdentifiedArray(uncheckedUniqueElements: [1, 2, 3])
+        XCTAssertEqual(array, [1, 2, 3])
+      }
+    }
 
-  func testInitUniqueElementsSelf() {
-    let array: IdentifiedArray = [1, 2, 3]
-    XCTAssertEqual(IdentifiedArray(uniqueElements: array), [1, 2, 3])
-  }
+    func testInitUniqueElementsSelf() {
+      if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
+        let array: IdentifiedArray = [1, 2, 3]
+        XCTAssertEqual(IdentifiedArray(uniqueElements: array), [1, 2, 3])
+      }
+    }
 
-  func testInitUniqueElementsSubSequence() {
-    let array: IdentifiedArray = [1, 2, 3]
-    XCTAssertEqual(IdentifiedArray(uniqueElements: array[...]), [1, 2, 3])
-  }
+    func testInitUniqueElementsSubSequence() {
+      if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
+        let array: IdentifiedArray = [1, 2, 3]
+        XCTAssertEqual(IdentifiedArray(uniqueElements: array[...]), [1, 2, 3])
+      }
+    }
 
-  func testInitUniqueElements() {
-    let array = IdentifiedArray(uniqueElements: [1, 2, 3])
-    XCTAssertEqual(array, [1, 2, 3])
-  }
+    func testInitUniqueElements() {
+      if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
+        let array = IdentifiedArray(uniqueElements: [1, 2, 3])
+        XCTAssertEqual(array, [1, 2, 3])
+      }
+    }
+  #endif
 
   func testSelfInit() {
     let array: IdentifiedArray = [1, 2, 3]
