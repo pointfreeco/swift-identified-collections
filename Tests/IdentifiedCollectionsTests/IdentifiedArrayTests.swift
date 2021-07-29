@@ -200,17 +200,15 @@ final class IdentifiedArrayTests: XCTestCase {
     }
   }
 
-  #if canImport(SwiftUI)
-    func testMoveFromOffsetsToOffset() {
-      var array: IdentifiedArray = [1, 2, 3]
-      array.move(fromOffsets: [0, 2], toOffset: 1)
-      XCTAssertEqual(array, [1, 3, 2])
-    }
+  func testMoveFromOffsetsToOffset() {
+    var array: IdentifiedArray = [1, 2, 3]
+    array.move(fromOffsets: [0, 2], toOffset: 1)
+    XCTAssertEqual(array, [1, 3, 2])
+  }
 
-    func testRemoveAtOffsets() {
-      var array: IdentifiedArray = [1, 2, 3]
-      array.remove(atOffsets: [0, 2])
-      XCTAssertEqual(array, [2])
-    }
-  #endif
+  func testRemoveAtOffsets() {
+    var array: IdentifiedArray = [1, 2, 3]
+    array.remove(atOffsets: [0, 2])
+    XCTAssertEqual(array, [2])
+  }
 }
