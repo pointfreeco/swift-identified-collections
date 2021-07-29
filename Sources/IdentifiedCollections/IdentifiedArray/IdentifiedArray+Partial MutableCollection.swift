@@ -1,3 +1,5 @@
+import Foundation
+
 extension IdentifiedArray {
   /// Reorders the elements of the array such that all the elements that match the given predicate
   /// are after all the elements that don't match.
@@ -106,6 +108,30 @@ extension IdentifiedArray {
   public mutating func swapAt(_ i: Int, _ j: Int) {
     self._dictionary.swapAt(i, j)
   }
+
+  /// Moves all the elements at the specified offsets to the specified destination offset,
+  /// preserving ordering.
+  ///
+  /// - Parameters:
+  ///   - source: The offsets of all elements to be moved.
+  ///   - destination: The destination offset.
+  /// - Complexity: O(*n* log *n*), where *n* is the length of the collection.
+  @inlinable
+  public mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
+    var removed: [Element] = []
+    var removedBeforeDestinationCount = 0
+
+    removed.reserveCapacity(source.count)
+    for index in source.reversed() {
+      removed.append(self.remove(at: index))
+      if destination > index {
+        removedBeforeDestinationCount += 1
+      }
+    }
+    for element in removed {
+      self.insert(element, at: destination - removedBeforeDestinationCount)
+    }
+  }
 }
 
 extension IdentifiedArray where Element: Comparable {
@@ -126,33 +152,3 @@ extension IdentifiedArray where Element: Comparable {
     self.sort(by: <)
   }
 }
-
-#if canImport(SwiftUI)
-  import SwiftUI
-
-  extension IdentifiedArray {
-    /// Moves all the elements at the specified offsets to the specified destination offset,
-    /// preserving ordering.
-    ///
-    /// - Parameters:
-    ///   - source: The offsets of all elements to be moved.
-    ///   - destination: The destination offset.
-    /// - Complexity: O(*n* log *n*), where *n* is the length of the collection.
-    @inlinable
-    public mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
-      var removed: [Element] = []
-      var removedBeforeDestinationCount = 0
-
-      removed.reserveCapacity(source.count)
-      for index in source.reversed() {
-        removed.append(self.remove(at: index))
-        if destination > index {
-          removedBeforeDestinationCount += 1
-        }
-      }
-      for element in removed {
-        self.insert(element, at: destination - removedBeforeDestinationCount)
-      }
-    }
-  }
-#endif

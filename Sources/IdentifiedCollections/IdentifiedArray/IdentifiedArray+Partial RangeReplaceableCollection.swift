@@ -1,3 +1,5 @@
+import Foundation
+
 extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// Creates an empty array.
   ///
@@ -145,24 +147,18 @@ extension IdentifiedArray {
   public mutating func reserveCapacity(_ minimumCapacity: Int) {
     self._dictionary.reserveCapacity(minimumCapacity)
   }
-}
 
-#if canImport(SwiftUI)
-  import SwiftUI
-
-  extension IdentifiedArray {
-    /// Removes all the elements at the specified offsets from the collection.
-    ///
-    /// - Parameter offsets: The offsets of all elements to be removed.
-    /// - Complexity: O(*n*) where *n* is the length of the collection.
-    @inlinable
-    public mutating func remove(atOffsets offsets: IndexSet) {
-      for range in offsets.rangeView.reversed() {
-        self.removeSubrange(range)
-      }
+  /// Removes all the elements at the specified offsets from the collection.
+  ///
+  /// - Parameter offsets: The offsets of all elements to be removed.
+  /// - Complexity: O(*n*) where *n* is the length of the collection.
+  @inlinable
+  public mutating func remove(atOffsets offsets: IndexSet) {
+    for range in offsets.rangeView.reversed() {
+      self.removeSubrange(range)
     }
   }
-#endif
+}
 
 // MARK: - Deprecations
 
