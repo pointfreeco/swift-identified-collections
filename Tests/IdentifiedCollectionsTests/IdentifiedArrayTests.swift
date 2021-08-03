@@ -212,8 +212,16 @@ final class IdentifiedArrayTests: XCTestCase {
 
   func testMoveFromOffsetsToOffset() {
     var array: IdentifiedArray = [1, 2, 3]
+    array.move(fromOffsets: [0, 2], toOffset: 0)
+    XCTAssertEqual(array, [1, 3, 2])
+
+    array = [1, 2, 3]
     array.move(fromOffsets: [0, 2], toOffset: 1)
     XCTAssertEqual(array, [1, 3, 2])
+
+    array = [1, 2, 3]
+    array.move(fromOffsets: [0, 2], toOffset: 2)
+    XCTAssertEqual(array, [2, 1, 3])
   }
 
   func testRemoveAtOffsets() {

@@ -154,7 +154,7 @@ extension IdentifiedArray {
   /// - Complexity: O(*n*) where *n* is the length of the collection.
   @inlinable
   public mutating func remove(atOffsets offsets: IndexSet) {
-    let suffixStart = self.halfStablePartition { index, _ in offsets.contains(index) }
+    let suffixStart = self.halfStablePartition { offsets.contains($0) }
     self.removeSubrange(suffixStart...)
   }
 }

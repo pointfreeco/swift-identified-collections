@@ -119,7 +119,7 @@ extension IdentifiedArray {
   @inlinable
   public mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
     var destination = destination
-    let suffixStart = self.halfStablePartition { index, _ in
+    let suffixStart = self.halfStablePartition { index in
       if index < destination { destination -= 1 }
       return source.contains(index)
     }
@@ -132,26 +132,22 @@ extension IdentifiedArray {
   }
 
   @inlinable
-  mutating func halfStablePartition(isSuffixElement predicate: (Index, Element) -> Bool) -> Index {
-    guard var i = self.firstIndex(where: predicate) else {
-      return self.endIndex
-    }
+  mutating func halfStablePartition(isSuffixIndex: (Index) -> Bool) -> Index {
+    guard var i = self.firstIndex(where: isSuffixIndex)
+    else { return self.endIndex }
 
     var j = self.index(after: i)
     while j != self.endIndex {
-      if !predicate(j, self[j]) {
-        self.swapAt(i, j)
-        formIndex(after: &i)
-      }
+      if !isSuffixIndex(j) { self.swapAt(i, j); formIndex(after: &i) }
       formIndex(after: &j)
     }
     return i
   }
 
   @inlinable
-  func firstIndex(where predicate: (Index, Element) -> Bool) -> Index? {
-    for (index, element) in zip(self.indices, self) {
-      if predicate(index, element) {
+  func firstIndex(where predicate: (Index) -> Bool) -> Index? {
+    for index in self.indices {
+      if predicate(index) {
         return index
       }
     }
