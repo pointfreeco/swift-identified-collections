@@ -15,10 +15,6 @@ extension IdentifiedArray: Collection {
   @inline(__always)
   public subscript(position: Int) -> Element {
     _read { yield self._dictionary[offset: position].value }
-    @available(
-      *, unavailable, message: "use the id-based subscript, instead, for in-place modification"
-    )
-    set { fatalError() }
   }
 
   /// Returns a new array containing the elements of the array that satisfy the given predicate.
