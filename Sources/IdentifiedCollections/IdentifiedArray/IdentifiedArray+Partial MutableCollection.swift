@@ -138,7 +138,10 @@ extension IdentifiedArray {
 
     var j = self.index(after: i)
     while j != self.endIndex {
-      if !isSuffixIndex(j) { self.swapAt(i, j); formIndex(after: &i) }
+      if !isSuffixIndex(j) {
+        self.swapAt(i, j)
+        formIndex(after: &i)
+      }
       formIndex(after: &j)
     }
     return i
