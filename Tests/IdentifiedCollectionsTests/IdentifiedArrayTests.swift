@@ -42,6 +42,16 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual(array[id: 3], User(id: 3, name: "Blob"))
     array[id: 3] = nil
     XCTAssertEqual(array[id: 3], nil)
+
+    array[id: 4] = User(id: 4, name: "Blob, Sr.")
+    XCTAssertEqual(
+      array,
+      [
+        User(id: 1, name: "Blob, Esq."),
+        User(id: 2, name: "Blob"),
+        User(id: 4, name: "Blob, Sr."),
+      ]
+    )
   }
 
   func testContainsElement() {
@@ -202,8 +212,16 @@ final class IdentifiedArrayTests: XCTestCase {
 
   func testMoveFromOffsetsToOffset() {
     var array: IdentifiedArray = [1, 2, 3]
+    array.move(fromOffsets: [0, 2], toOffset: 0)
+    XCTAssertEqual(array, [1, 3, 2])
+
+    array = [1, 2, 3]
     array.move(fromOffsets: [0, 2], toOffset: 1)
     XCTAssertEqual(array, [1, 3, 2])
+
+    array = [1, 2, 3]
+    array.move(fromOffsets: [0, 2], toOffset: 2)
+    XCTAssertEqual(array, [2, 1, 3])
   }
 
   func testRemoveAtOffsets() {

@@ -118,19 +118,30 @@ extension IdentifiedArray {
   /// - Complexity: O(*n* log *n*), where *n* is the length of the collection.
   @inlinable
   public mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
-    var removed: [Element] = []
-    var removedBeforeDestinationCount = 0
+    var destination = destination
+    let suffixStart = self._halfStablePartition { index in
+      if index < destination { destination -= 1 }
+      return source.contains(index)
+    }
+    let suffix = self[suffixStart...]
+    self.removeSubrange(suffixStart...)
 
-    removed.reserveCapacity(source.count)
-    for index in source.reversed() {
-      removed.append(self.remove(at: index))
-      if destination > index {
-        removedBeforeDestinationCount += 1
-      }
+    for (destination, element) in zip(destination..., suffix) {
+      self.insert(element, at: destination)
     }
-    for element in removed {
-      self.insert(element, at: destination - removedBeforeDestinationCount)
+  }
+
+  @inlinable
+  mutating func _halfStablePartition(isSuffixIndex: (Index) -> Bool) -> Index {
+    guard var i = self.indices.firstIndex(where: isSuffixIndex)
+    else { return self.endIndex }
+
+    var j = self.index(after: i)
+    while j != self.endIndex {
+      if !isSuffixIndex(j) { self.swapAt(i, j); formIndex(after: &i) }
+      formIndex(after: &j)
     }
+    return i
   }
 }
 
