@@ -1,5 +1,3 @@
-import Foundation
-
 extension IdentifiedArray {
   /// Reorders the elements of the array such that all the elements that match the given predicate
   /// are after all the elements that don't match.
@@ -107,44 +105,6 @@ extension IdentifiedArray {
   @inlinable
   public mutating func swapAt(_ i: Int, _ j: Int) {
     self._dictionary.swapAt(i, j)
-  }
-
-  /// Moves all the elements at the specified offsets to the specified destination offset,
-  /// preserving ordering.
-  ///
-  /// - Parameters:
-  ///   - source: The offsets of all elements to be moved.
-  ///   - destination: The destination offset.
-  /// - Complexity: O(*n* log *n*), where *n* is the length of the collection.
-  @inlinable
-  public mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
-    var destination = destination
-    let suffixStart = self._halfStablePartition { index in
-      if index < destination { destination -= 1 }
-      return source.contains(index)
-    }
-    let suffix = self[suffixStart...]
-    self.removeSubrange(suffixStart...)
-
-    for (destination, element) in zip(destination..., suffix) {
-      self.insert(element, at: destination)
-    }
-  }
-
-  @inlinable
-  mutating func _halfStablePartition(isSuffixIndex: (Index) -> Bool) -> Index {
-    guard var i = self.indices.firstIndex(where: isSuffixIndex)
-    else { return self.endIndex }
-
-    var j = self.index(after: i)
-    while j != self.endIndex {
-      if !isSuffixIndex(j) {
-        self.swapAt(i, j)
-        formIndex(after: &i)
-      }
-      formIndex(after: &j)
-    }
-    return i
   }
 }
 

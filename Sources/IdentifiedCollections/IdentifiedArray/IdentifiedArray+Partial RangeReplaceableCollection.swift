@@ -1,5 +1,3 @@
-import Foundation
-
 extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// Creates an empty array.
   ///
@@ -8,7 +6,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// - Complexity: O(1)
   @inlinable
   public init() {
-    self.init(id: \.id, _id: { $0.id }, _dictionary: .init())
+    self.init(id: \.id, _id: \.id, _dictionary: .init())
   }
 }
 
@@ -146,16 +144,6 @@ extension IdentifiedArray {
   @inlinable
   public mutating func reserveCapacity(_ minimumCapacity: Int) {
     self._dictionary.reserveCapacity(minimumCapacity)
-  }
-
-  /// Removes all the elements at the specified offsets from the collection.
-  ///
-  /// - Parameter offsets: The offsets of all elements to be removed.
-  /// - Complexity: O(*n*) where *n* is the length of the collection.
-  @inlinable
-  public mutating func remove(atOffsets offsets: IndexSet) {
-    let suffixStart = self._halfStablePartition { offsets.contains($0) }
-    self.removeSubrange(suffixStart...)
   }
 }
 
