@@ -1,7 +1,18 @@
+//===----------------------------------------------------------*- swift -*-===//
+//
+// This source file is part of the Swift open source project
+//
+// Copyright (c) 2020 Apple Inc. and the Swift project authors
+// Licensed under Apache License v2.0 with Runtime Library Exception
+//
+// See https://swift.org/LICENSE.txt for license information
+//
+//===----------------------------------------------------------------------===//
+
 import Foundation
 
 // Implementations in this file are from the SE-0270 preview package, with minimal changes to work
-// with `Foundation.IndexSet` instead of the proposed `RangeSet`:
+// with `Foundation.IndexSet` and SwiftUI instead of the proposed `RangeSet` APIs:
 //
 // https://github.com/apple/swift-se0270-range-set
 
