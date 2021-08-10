@@ -5,7 +5,7 @@ import Foundation
 //
 // https://github.com/apple/swift-se0270-range-set
 
-extension IdentifiedArray { // : Partial MutableCollection
+extension IdentifiedArray {  // : Partial MutableCollection
   /// Moves all the elements at the specified offsets to the specified destination offset,
   /// preserving ordering.
   ///
@@ -30,7 +30,7 @@ extension IdentifiedArray { // : Partial MutableCollection
   }
 }
 
-extension IdentifiedArray { // : Partial RangeReplaceableCollection
+extension IdentifiedArray {  // : Partial RangeReplaceableCollection
   /// Removes all the elements at the specified offsets from the collection.
   ///
   /// - Parameter offsets: The offsets of all elements to be removed.
@@ -100,7 +100,8 @@ extension IdentifiedArray {
         ? range.lowerBound
         : range.upperBound
     }
-    let h = n / 2, i = index(range.lowerBound, offsetBy: h)
+    let h = n / 2
+    let i = index(range.lowerBound, offsetBy: h)
     let j = try self._indexedStablePartition(
       count: h,
       range: range.lowerBound..<i,
@@ -123,7 +124,8 @@ extension IdentifiedArray {
     in subrange: Range<Index>,
     shiftingToStart middle: Index
   ) -> Index {
-    var m = middle, s = subrange.lowerBound
+    var m = middle
+    var s = subrange.lowerBound
     let e = subrange.upperBound
 
     // Handle the trivial cases
@@ -139,7 +141,7 @@ extension IdentifiedArray {
     //   ^             ^     ^        ^     ^             ^
     //   s             m     e        s     m             e
     //
-    var ret = e // start with a known incorrect result.
+    var ret = e  // start with a known incorrect result.
     while true {
       // Exchange the leading elements of each region (up to the
       // length of the shorter region).
