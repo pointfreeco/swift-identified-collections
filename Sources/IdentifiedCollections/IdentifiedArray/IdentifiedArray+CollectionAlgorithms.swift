@@ -1,3 +1,8 @@
+// Implementations in this file are from the SE-0270 preview package, with minimal changes to work
+// with `Foundation.IndexSet` and SwiftUI instead of the proposed `RangeSet` APIs:
+//
+// https://github.com/apple/swift-se0270-range-set
+
 //===----------------------------------------------------------*- swift -*-===//
 //
 // This source file is part of the Swift open source project
@@ -10,11 +15,6 @@
 //===----------------------------------------------------------------------===//
 
 import Foundation
-
-// Implementations in this file are from the SE-0270 preview package, with minimal changes to work
-// with `Foundation.IndexSet` and SwiftUI instead of the proposed `RangeSet` APIs:
-//
-// https://github.com/apple/swift-se0270-range-set
 
 extension IdentifiedArray {  // : Partial MutableCollection
   /// Moves all the elements at the specified offsets to the specified destination offset,

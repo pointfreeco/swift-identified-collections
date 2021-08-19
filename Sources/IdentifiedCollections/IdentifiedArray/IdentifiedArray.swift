@@ -394,6 +394,15 @@ public struct IdentifiedArray<ID, Element> where ID: Hashable {
     self._dictionary.index(forKey: id)
   }
 
+  /// Removes the given element from the array.
+  ///
+  /// If the element is found in the array, this method returns the element.
+  ///
+  /// If the element isn't found in the array, `remove` returns `nil`.
+  ///
+  /// - Parameter element: The element to remove.
+  /// - Returns: The value that was removed, or `nil` if the element was not present in the array.
+  /// - Complexity: O(`count`)
   @inlinable
   @discardableResult
   public mutating func remove(_ element: Element) -> Element? {
