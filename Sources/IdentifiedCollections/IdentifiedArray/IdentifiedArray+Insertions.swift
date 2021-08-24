@@ -46,7 +46,7 @@ extension IdentifiedArray {
   @inlinable
   @discardableResult
   public mutating func update(_ item: Element, at i: Int) -> Element {
-    let old = self._dictionary[offset: i].key
+    let old = self._dictionary.elements[i].key
     precondition(
       _id(item) == old, "The replacement item must match the identity of the original"
     )
