@@ -14,7 +14,7 @@ extension IdentifiedArray: Collection {
   @inlinable
   @inline(__always)
   public subscript(position: Int) -> Element {
-    _read { yield self._dictionary[offset: position].value }
+    _read { yield self._dictionary.elements[position].value }
   }
 
   /// Returns a new array containing the elements of the array that satisfy the given predicate.
