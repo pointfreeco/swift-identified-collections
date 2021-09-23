@@ -230,7 +230,7 @@ Usage of `IdentifiedArray` in [the Composable Architecture](https://github.com/p
   - [Episode 148](https://www.pointfree.co/episodes/ep148-derived-behavior-collections): Derived Behavior: Collections
 
 <a href="https://www.pointfree.co/episodes/ep148-derived-behavior-collections">
-  <img alt="video poster image" src="https://i.vimeocdn.com/video/1151159019.jpg" width="480">
+  <img alt="video poster image" src="https://d3rccdn33rt8ze.cloudfront.net/episodes/0148.jpeg" width="480">
 </a>
 
 ## License
