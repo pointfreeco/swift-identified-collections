@@ -231,40 +231,40 @@ final class IdentifiedArrayTests: XCTestCase {
   }
   func testEquatable() {
     struct Foo: Identifiable, Equatable {
-        var id: String = "id"
-        var value: String = "value"
+      var id: String = "id"
+      var value: String = "value"
     }
     // Create arrays using all of the initializers
     var arrays: [IdentifiedArray<String, Foo>] = [
-        IdentifiedArray<String, Foo>(),
-        IdentifiedArray<String, Foo>(uncheckedUniqueElements: [], id: \.id),
-        IdentifiedArray<String, Foo>(uniqueElements: [], id: \.id),
-        IdentifiedArray<String, Foo>(uncheckedUniqueElements: []),
-        IdentifiedArray<String, Foo>(uniqueElements: [])
+      IdentifiedArray<String, Foo>(),
+      IdentifiedArray<String, Foo>(uncheckedUniqueElements: [], id: \.id),
+      IdentifiedArray<String, Foo>(uniqueElements: [], id: \.id),
+      IdentifiedArray<String, Foo>(uncheckedUniqueElements: []),
+      IdentifiedArray<String, Foo>(uniqueElements: []),
     ]
     arrays.forEach({ lhs in
-        arrays.forEach({ rhs in
-            XCTAssertEqual(lhs, rhs)
-        })
+      arrays.forEach({ rhs in
+        XCTAssertEqual(lhs, rhs)
+      })
     })
     // add an element to each array
     arrays.indices.forEach({
-        arrays[$0].append(Foo())
+      arrays[$0].append(Foo())
     })
     arrays.forEach({ lhs in
-        arrays.forEach({ rhs in
-            XCTAssertEqual(lhs, rhs)
-        })
+      arrays.forEach({ rhs in
+        XCTAssertEqual(lhs, rhs)
+      })
     })
     // modify all arrays
     arrays.indices.forEach({
-        arrays[$0].append(Foo(id: "id2", value: "\($0)"))
+      arrays[$0].append(Foo(id: "id2", value: "\($0)"))
     })
     arrays.enumerated().forEach({ lhsIndex, lhs in
-        arrays.enumerated().forEach({ rhsIndex, rhs in
-            guard rhsIndex != lhsIndex else { return }
-            XCTAssertNotEqual(lhs, rhs)
-        })
+      arrays.enumerated().forEach({ rhsIndex, rhs in
+        guard rhsIndex != lhsIndex else { return }
+        XCTAssertNotEqual(lhs, rhs)
+      })
     })
   }
 }
