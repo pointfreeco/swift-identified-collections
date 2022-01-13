@@ -21,7 +21,7 @@ extension IdentifiedArray {
   @inlinable
   public mutating func append<S>(contentsOf newElements: S)
   where Element == S.Element, S: Sequence {
-    contentsOf.forEach {
+    newElements.forEach {
       insert($0, at: endIndex)
     }
   }
