@@ -14,6 +14,18 @@ extension IdentifiedArray {
     self.insert(item, at: self.endIndex)
   }
 
+  /// Append content of elements to the end of the array, if the array doesn't already contain it.
+  ///
+  /// - Parameter item: The element to add to the array.
+  /// - Complexity: The operation is expected to perform O(n) where n is the number of the elements that would be appended.
+  @inlinable
+  public mutating func append<S>(contentsOf newElements: S)
+  where Element == S.Element, S: Sequence {
+    newElements.forEach {
+      insert($0, at: endIndex)
+    }
+  }
+
   /// Insert a new member to this array at the specified index, if the array doesn't already contain
   /// it.
   ///
