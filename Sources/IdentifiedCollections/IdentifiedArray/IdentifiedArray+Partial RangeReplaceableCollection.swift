@@ -150,10 +150,6 @@ extension IdentifiedArray {
 // MARK: - Deprecations
 
 extension IdentifiedArray {
-  @available(*, unavailable, message: "use 'append(_:)' with each element to handle duplicates")
-  public mutating func append<S>(contentsOf newElements: S)
-  where Element == S.Element, S: Sequence {}
-
   @available(*, unavailable, message: "use 'insert(_:at:)' with each element to handle duplicates")
   public mutating func replaceSubrange<C>(_ subrange: Range<Index>, with newElements: C)
   where C: Collection, Self.Element == C.Element {}
