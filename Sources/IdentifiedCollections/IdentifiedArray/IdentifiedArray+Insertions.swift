@@ -19,8 +19,6 @@ extension IdentifiedArray {
   /// - Parameter item: The element to add to the array.
   /// - Complexity: The operation is expected to perform O(n) where n is the number of the elements that would be appended.
   @inlinable
-  @inline(__always)
-  @discardableResult
   public mutating func append<S>(contentsOf newElements: S)
   where Element == S.Element, S: Sequence {
     contentsOf.forEach {
