@@ -161,6 +161,12 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual(array, [1, 2, 3, 4])
   }
 
+  func testAppendContentsOf() {
+    var array: IdentifiedArray = [1, 2, 3]
+    array.append(contentsOf: [1, 4, 3, 5])
+    XCTAssertEqual(array, [1, 2, 3, 4, 5])
+  }
+
   func testInsert() {
     var array: IdentifiedArray = [1, 2, 3]
     var (inserted, index) = array.insert(0, at: 0)
