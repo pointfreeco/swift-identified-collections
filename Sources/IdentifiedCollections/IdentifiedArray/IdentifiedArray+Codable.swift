@@ -6,6 +6,7 @@ extension IdentifiedArray: Encodable where Element: Encodable {
   }
 }
 
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
 extension IdentifiedArray: Decodable
 where Element: Decodable & Identifiable, ID == Element.ID {
   @inlinable

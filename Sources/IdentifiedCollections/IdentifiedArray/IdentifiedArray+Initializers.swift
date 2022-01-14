@@ -94,6 +94,7 @@ extension IdentifiedArray {
   }
 }
 
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
 extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// Creates a new array from the elements in the given sequence, which must not contain duplicate
   /// ids.
@@ -158,6 +159,7 @@ extension IdentifiedArray {
   }
 }
 
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
 extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   @available(*, deprecated, renamed: "init(uniqueElements:)")
   public init<S>(_ elements: S) where S: Sequence, S.Element == Element {
