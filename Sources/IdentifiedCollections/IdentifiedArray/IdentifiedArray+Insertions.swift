@@ -14,15 +14,17 @@ extension IdentifiedArray {
     self.insert(item, at: self.endIndex)
   }
 
-  /// Append content of elements to the end of the array, if the array doesn't already contain it.
+  /// Append the contents of a sequence to the end of the set, excluding elements that are already
+  /// members.
   ///
-  /// - Parameter item: The element to add to the array.
-  /// - Complexity: The operation is expected to perform O(n) where n is the number of the elements that would be appended.
+  /// - Parameter elements: A finite sequence of elements to append.
+  /// - Complexity: The operation is expected to perform amortized O(1) copy, hash, and compare
+  ///   operations on the `Element` type, if it implements high-quality hashing.
   @inlinable
   public mutating func append<S>(contentsOf newElements: S)
   where Element == S.Element, S: Sequence {
-    newElements.forEach {
-      insert($0, at: endIndex)
+    for element in newElements {
+      self.append(element)
     }
   }
 
