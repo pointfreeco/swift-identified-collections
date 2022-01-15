@@ -1,3 +1,4 @@
+@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
 extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// Creates an empty array.
   ///
