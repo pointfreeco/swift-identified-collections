@@ -1,4 +1,13 @@
-extension IdentifiedArray {
+extension IdentifiedArray: MutableCollection {
+  public subscript(position: Int) -> Element {
+    _read { yield self._dictionary.values.elements[position] }
+    _modify {
+      var element = self._dictionary.values.elements[position]
+      yield &element
+      self._dictionary[element[keyPath: self.id]] = element
+    }
+  }
+
   /// Reorders the elements of the array such that all the elements that match the given predicate
   /// are after all the elements that don't match.
   ///
