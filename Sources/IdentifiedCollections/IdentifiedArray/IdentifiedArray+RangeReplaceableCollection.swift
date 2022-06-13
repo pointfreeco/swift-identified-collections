@@ -10,6 +10,16 @@ where Element: Identifiable, ID == Element.ID {
   public init() {
     self.init(id: \.id, _id: \.id, _dictionary: .init())
   }
+
+  public mutating func replaceSubrange<C: Collection>(
+    _ subrange: Range<Int>,
+    with newElements: C
+  ) where Element == C.Element {
+    self._dictionary.removeSubrange(subrange)
+    for element in newElements.reversed() {
+      self._dictionary.updateValue(element, forKey: element.id, insertingAt: subrange.startIndex)
+    }
+  }
 }
 
 extension IdentifiedArray {
