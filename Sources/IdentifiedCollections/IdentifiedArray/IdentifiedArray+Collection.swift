@@ -11,12 +11,6 @@ extension IdentifiedArray: Collection {
   @inline(__always)
   public func index(after i: Int) -> Int { self._dictionary.keys.index(after: i) }
 
-  @inlinable
-  @inline(__always)
-  public subscript(position: Int) -> Element {
-    _read { yield self._dictionary.elements[position].value }
-  }
-
   /// Returns a new array containing the elements of the array that satisfy the given predicate.
   ///
   /// - Parameter isIncluded: A closure that takes an element as its argument and returns a Boolean

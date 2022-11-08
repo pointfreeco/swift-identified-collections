@@ -16,7 +16,7 @@
 
 import Foundation
 
-extension IdentifiedArray {  // : Partial MutableCollection
+extension IdentifiedArray {  // : MutableCollection
   /// Moves all the elements at the specified offsets to the specified destination offset,
   /// preserving ordering.
   ///
@@ -41,7 +41,7 @@ extension IdentifiedArray {  // : Partial MutableCollection
   }
 }
 
-extension IdentifiedArray {  // : Partial RangeReplaceableCollection
+extension IdentifiedArray {  // : RangeReplaceableCollection
   /// Removes all the elements at the specified offsets from the collection.
   ///
   /// - Parameter offsets: The offsets of all elements to be removed.

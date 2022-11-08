@@ -1,5 +1,6 @@
 @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
-extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
+extension IdentifiedArray: RangeReplaceableCollection
+where Element: Identifiable, ID == Element.ID {
   /// Creates an empty array.
   ///
   /// This initializer is equivalent to initializing with an empty array literal.
@@ -7,7 +8,21 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// - Complexity: O(1)
   @inlinable
   public init() {
-    self.init(id: \.id, _id: \.id, _dictionary: .init())
+    self.init(id: \.id, _id: { $0.id }, _dictionary: .init())
+  }
+
+  @inlinable
+  public mutating func replaceSubrange<C: Collection>(_ subrange: Range<Int>, with newElements: C)
+  where C.Element == Element {
+    self._dictionary.removeSubrange(subrange)
+    self._dictionary.reserveCapacity(self.count + newElements.count)
+    for element in newElements.reversed() {
+      self._dictionary.updateValue(
+        element,
+        forKey: self._id(element),
+        insertingAt: subrange.startIndex
+      )
+    }
   }
 }
 
@@ -146,16 +161,4 @@ extension IdentifiedArray {
   public mutating func reserveCapacity(_ minimumCapacity: Int) {
     self._dictionary.reserveCapacity(minimumCapacity)
   }
-}
-
-// MARK: - Deprecations
-
-extension IdentifiedArray {
-  @available(*, unavailable, message: "use 'insert(_:at:)' with each element to handle duplicates")
-  public mutating func replaceSubrange<C>(_ subrange: Range<Index>, with newElements: C)
-  where C: Collection, Self.Element == C.Element {}
-
-  @available(*, unavailable, message: "use 'insert(_:at:)' with each element to handle duplicates")
-  public mutating func replaceSubrange<C, R>(_ subrange: R, with newElements: C)
-  where C: Collection, R: RangeExpression, Element == C.Element, Index == R.Bound {}
 }
