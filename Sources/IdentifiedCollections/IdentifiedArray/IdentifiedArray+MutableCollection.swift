@@ -1,4 +1,17 @@
-extension IdentifiedArray {
+extension IdentifiedArray: MutableCollection {
+  @inlinable
+  @inline(__always)
+  public subscript(position: Int) -> Element {
+    _read { yield self._dictionary.elements.values[position] }
+    _modify {
+      yield &self._dictionary.elements.values[position]
+      precondition(
+        self._dictionary.elements.keys[position] == _id(self._dictionary.elements.values[position]),
+        "Element identity must remain constant"
+      )
+    }
+  }
+
   /// Reorders the elements of the array such that all the elements that match the given predicate
   /// are after all the elements that don't match.
   ///

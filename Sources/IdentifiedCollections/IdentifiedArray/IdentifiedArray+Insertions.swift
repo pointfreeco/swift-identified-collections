@@ -23,6 +23,7 @@ extension IdentifiedArray {
   @inlinable
   public mutating func append<S>(contentsOf newElements: S)
   where Element == S.Element, S: Sequence {
+    self.reserveCapacity(self.count + newElements.underestimatedCount)
     for element in newElements {
       self.append(element)
     }
