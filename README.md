@@ -219,7 +219,7 @@ dependencies: [
 
 ## Documentation
 
-The latest documentation for Identified Collections' APIs is available [here](https://pointfreeco.github.io/swift-identified-collections/).
+The latest documentation for Identified Collections' APIs is available [here](https://pointfreeco.github.io/swift-identified-collections/main/documentation/identifiedcollections/).
 
 ## Interested in learning more?
 
