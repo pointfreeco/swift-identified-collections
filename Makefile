@@ -5,7 +5,7 @@ test-linux:
 		--rm \
 		-v "$(PWD):$(PWD)" \
 		-w "$(PWD)" \
-		swift:5.4 \
+		swift:5.7 \
 		bash -c 'make test-swift'
 
 test-swift:
