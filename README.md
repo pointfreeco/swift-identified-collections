@@ -213,7 +213,7 @@ If you want to use Identified Collections in a [SwiftPM](https://swift.org/packa
 
 ``` swift
 dependencies: [
-  .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "0.1.0")
+  .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "0.5.0")
 ],
 ```
 

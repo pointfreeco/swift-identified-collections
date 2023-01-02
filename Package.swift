@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 
 import PackageDescription
 
@@ -25,7 +25,7 @@ let package = Package(
       name: "IdentifiedCollectionsTests",
       dependencies: ["IdentifiedCollections"]
     ),
-    .target(
+    .executableTarget(
       name: "swift-identified-collections-benchmark",
       dependencies: [
         "IdentifiedCollections",

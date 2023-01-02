@@ -1,0 +1,12 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: Discussion
+    url: https://github.com/pointfreeco/swift-identified-collections/discussions
+    about: Identified Collections Q&A, ideas, and more
+  - name: Documentation
+    url: https://pointfreeco.github.io/swift-identified-collections/main/documentation/identifiedcollections/
+    about: Read Identified Collections' documentation
+  - name: Videos
+    url: https://www.pointfree.co/
+    about: Watch videos to get a behind-the-scenes look at how Identified Collections was motivated and built
