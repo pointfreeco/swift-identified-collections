@@ -1,13 +1,11 @@
-# Swift Identified Collections
-
-[![CI](https://github.com/pointfreeco/swift-identified-collections/workflows/CI/badge.svg)](https://actions-badge.atrox.dev/pointfreeco/swift-identified-collections/goto)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpointfreeco%2Fswift-identified-collections%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/pointfreeco/swift-identified-collections)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fpointfreeco%2Fswift-identified-collections%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/pointfreeco/swift-identified-collections)
+# ``IdentifiedCollections``
 
 A library of data structures for working with collections of identifiable elements in an ergonomic,
 performant way.
 
-## Motivation
+## Overview
+
+### Motivation
 
 When modeling a collection of elements in your application's state, it is easy to reach for a
 standard `Array`. However, as your application becomes more complex, this approach can break down in
@@ -160,7 +158,7 @@ class TodosViewModel: ObservableObject {
 }
 ```
 
-## Introducing: identified collections
+### Introducing: identified collections
 
 Identified collections are designed to solve all of these problems by providing data structures for
 working with collections of identifiable elements in an ergonomic, performant way.
@@ -208,15 +206,15 @@ List(self.viewModel.todos) { todo in
 
 Identified arrays are designed to integrate with SwiftUI applications, as well as applications
 written in
-[the Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture).
+ [the Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture).
 
-## Design
+### Design
 
-`IdentifiedArray` is a lightweight wrapper around the
-[`OrderedDictionary`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedDictionary.md)
-type from Apple's [Swift Collections](https://github.com/apple/swift-collections). It shares many of
-the same performance characteristics and design considerations, but is better adapted to solving the
-problem of holding onto a collection of _identifiable_ elements in your application's state.
+`IdentifiedArray` is a lightweight wrapper around the 
+ [`OrderedDictionary`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedDictionary.md) type from Apple's [Swift Collections](https://github.com/apple/swift-collections).
+It shares many of the same performance characteristics and design considerations, but is better
+adapted to solving the problem of holding onto a collection of _identifiable_ elements in your
+application's state.
 
 `IdentifiedArray` does not expose any of the details of `OrderedDictionary` that may lead to
 breaking invariants. For example an `OrderedDictionary<ID, Identifiable>` may freely hold a value
@@ -224,7 +222,7 @@ whose identifier does not match its key or multiple values could have the same i
 `IdentifiedArray` does not allow for these situations.
 
 And unlike
-[`OrderedSet`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedSet.md),
+ [`OrderedSet`](https://github.com/apple/swift-collections/blob/main/Documentation/OrderedSet.md),
 `IdentifiedArray` does not require that its `Element` type conforms to the `Hashable` protocol,
 which may be difficult or impossible to do, and introduces questions around the quality of hashing,
 etc.
@@ -237,19 +235,19 @@ SwiftUI's `List` and `ForEach` views take an `id` key path to an element's ident
 var numbers = IdentifiedArray(id: \Int.self)
 ```
 
-## Performance
+### Performance
 
-`IdentifiedArray` is designed to match the performance characteristics of `OrderedDictionary`. It
-has been benchmarked with
+`IdentifiedArray` is designed to match the performance characteristics of `OrderedDictionary`.
+It has been benchmarked with
 [Swift Collections Benchmark](https://github.com/apple/swift-collections-benchmark):
 
-![](.github/benchmark.png)
+![](benchmark.png)
 
-## Installation
+### Installation
 
 You can add Identified Collections to an Xcode project by adding it as a package dependency.
 
-> https://github.com/pointfreeco/swift-identified-collections
+[https://github.com/pointfreeco/swift-identified-collections](https://github.com/pointfreeco/swift-identified-collections)
 
 If you want to use Identified Collections in a [SwiftPM](https://swift.org/package-manager/)
 project, it's as simple as adding a `dependencies` clause to your `Package.swift`:
@@ -260,27 +258,8 @@ dependencies: [
 ],
 ```
 
-## Documentation
+## Topics
 
-The latest documentation for Identified Collections' APIs is available
-[here](https://pointfreeco.github.io/swift-identified-collections/main/documentation/identifiedcollections/).
+### Collections
 
-## Interested in learning more?
-
-These concepts (and more) are explored thoroughly in [Point-Free](https://www.pointfree.co), a video
-series exploring functional programming and Swift hosted by [Brandon Williams](https://github.com/mbrandonw) and [Stephen Celis](https://github.com/stephencelis).
-
-Usage of `IdentifiedArray` in
-[the Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) was
-explored in the following [Point-Free](https://www.pointfree.co) episode:
-
-  * [Episode 148](https://www.pointfree.co/episodes/ep148-derived-behavior-collections): Derived
-    Behavior: Collections
-
-<a href="https://www.pointfree.co/episodes/ep148-derived-behavior-collections">
-  <img alt="video poster image" src="https://d3rccdn33rt8ze.cloudfront.net/episodes/0148.jpeg" width="480">
-</a>
-
-## License
-
-All modules are released under the MIT license. See [LICENSE](LICENSE) for details.
+- ``IdentifiedArray``
