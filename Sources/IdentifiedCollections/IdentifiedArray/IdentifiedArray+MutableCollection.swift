@@ -3,6 +3,13 @@ extension IdentifiedArray: MutableCollection {
   @inline(__always)
   public subscript(position: Int) -> Element {
     _read { yield self._dictionary.elements.values[position] }
+    set {
+      let key = _id(newValue)
+      if self._dictionary.keys.contains(key) {
+        self._dictionary.removeValue(forKey: key)
+      }
+      self._dictionary.updateValue(newValue, forKey: key, insertingAt: position)
+    }
     _modify {
       yield &self._dictionary.elements.values[position]
       precondition(
