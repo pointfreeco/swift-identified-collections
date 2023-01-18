@@ -265,6 +265,10 @@ dependencies: [
 The latest documentation for Identified Collections' APIs is available
 [here](https://pointfreeco.github.io/swift-identified-collections/main/documentation/identifiedcollections/).
 
+## Translations
+
+- [Korean](https://gist.github.com/havilog/594bcaba48e7e40cb0395243fa96b47e)
+
 ## Interested in learning more?
 
 These concepts (and more) are explored thoroughly in [Point-Free](https://www.pointfree.co), a video
