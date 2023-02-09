@@ -55,7 +55,7 @@ jobs:
                 --target IdentifiedCollections \
                 --output-path docs-out/"$tag" \
                 --transform-for-static-hosting \
-                --hosting-base-path /swift-identified-collcetions/"$tag" \
+                --hosting-base-path /swift-identified-collections/"$tag" \
                 && echo "✅ Documentation generated for IdentifiedCollections @ "$tag" release." \
                 || echo "⚠️ Documentation skipped for IdentifiedCollections @ "$tag".";
             fi;
