@@ -8,9 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        webhook_url: 
-          - '${{ secrets.SLACK_PROJECT_CHANNEL_WEBHOOK_URL }}'
-          - '${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}'
+        channel: [project, releases]
+        include: 
+          - channel: project
+            secret_key: SLACK_PROJECT_CHANNEL_WEBHOOK_URL
+          - channel: releases
+            secret_key: SLACK_RELEASES_WEBHOOK_URL
     steps:
       - name: Dump Github context
         env:
@@ -20,7 +23,7 @@ jobs:
         if: success()
         uses: tokorom/action-slack-incoming-webhook@main
         env:
-          INCOMING_WEBHOOK_URL: ${{ matrix.webhook_url }}
+          INCOMING_WEBHOOK_URL: ${{ secrets[matrix.secret_key] }}
         with:
           text: swift-identified-collections ${{ github.event.release.tag_name }} has been released.
           blocks: |
