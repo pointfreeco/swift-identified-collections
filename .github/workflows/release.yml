@@ -22,14 +22,14 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ matrix.webhook_url }}
         with:
-          text: swift-identified-collections ${{ github.event.release.tag_name}} has been released.
+          text: swift-identified-collections ${{ github.event.release.tag_name }} has been released.
           blocks: |
             [
               {
                 "type": "header",
                 "text": {
                   "type": "plain_text",
-                  "text": "swift-identified-collections ${{ github.event.release.tag_name}}"
+                  "text": "swift-identified-collections ${{ github.event.release.tag_name }}"
                 }
               },
               {
