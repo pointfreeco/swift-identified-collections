@@ -42,7 +42,7 @@ jobs:
                 }
               }
             ]
-release-releases-channel:
+  release-releases-channel:
     runs-on: ubuntu-latest
     steps:
       - name: Dump Github context
