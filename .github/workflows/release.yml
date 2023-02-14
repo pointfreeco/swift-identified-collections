@@ -4,16 +4,8 @@ on:
     types: [published]
   workflow_dispatch:
 jobs:
-  build:
+  release-project-channel:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        channel: [project, releases]
-        include: 
-          - channel: project
-            secret_key: SLACK_PROJECT_CHANNEL_WEBHOOK_URL
-          - channel: releases
-            secret_key: SLACK_RELEASES_WEBHOOK_URL
     steps:
       - name: Dump Github context
         env:
@@ -23,7 +15,45 @@ jobs:
         if: success()
         uses: tokorom/action-slack-incoming-webhook@main
         env:
-          INCOMING_WEBHOOK_URL: ${{ secrets[matrix.secret_key] }}
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_PROJECT_CHANNEL_WEBHOOK_URL }}
+        with:
+          text: swift-identified-collections ${{ github.event.release.tag_name }} has been released.
+          blocks: |
+            [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "swift-identified-collections ${{ github.event.release.tag_name }}"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ${{ toJSON(github.event.release.body) }}
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "${{ github.event.release.html_url }}"
+                }
+              }
+            ]
+release-releases-channel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump Github context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Slack Notification on SUCCESS
+        if: success()
+        uses: tokorom/action-slack-incoming-webhook@main
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}
         with:
           text: swift-identified-collections ${{ github.event.release.tag_name }} has been released.
           blocks: |
