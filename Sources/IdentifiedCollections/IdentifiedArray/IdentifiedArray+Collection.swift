@@ -1,3 +1,5 @@
+import OrderedCollections
+
 extension IdentifiedArray: Collection {
   @inlinable
   @inline(__always)

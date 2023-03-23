@@ -1,3 +1,5 @@
+import OrderedCollections
+
 extension IdentifiedArray: Encodable where Element: Encodable {
   @inlinable
   public func encode(to encoder: Encoder) throws {

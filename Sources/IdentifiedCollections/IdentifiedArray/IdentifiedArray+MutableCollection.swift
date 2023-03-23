@@ -1,3 +1,5 @@
+import OrderedCollections
+
 extension IdentifiedArray: MutableCollection {
   @inlinable
   @inline(__always)
