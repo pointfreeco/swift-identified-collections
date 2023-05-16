@@ -331,7 +331,9 @@ public struct IdentifiedArray<ID, Element> where ID: Hashable {
     self._id = _id
     self._dictionary = _dictionary
   }
+}
 
+extension IdentifiedArray: IdentifiedCollection {
   /// Accesses the value associated with the given id for reading and writing.
   ///
   /// This *id-based* subscript returns the element identified by the given id if found in the

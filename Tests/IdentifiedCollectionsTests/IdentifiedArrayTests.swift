@@ -4,7 +4,7 @@ import XCTest
 
 extension Int: Identifiable { public var id: Self { self } }
 
-private struct User: Equatable, Identifiable {
+struct User: Equatable, Identifiable {
   let id: Int
   var name: String
 }
