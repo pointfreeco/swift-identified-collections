@@ -38,8 +38,8 @@ extension IdentifiedArray {
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in
-  ///     `keysAndValues` must be unique.
+  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
+  ///     must be unique.
   ///   - id: The key path to an element's identifier.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
@@ -187,7 +187,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
   /// - Parameters elements: A sequence of elements to use for the new array. Every key in
-  ///   `keysAndValues` must be unique.
+  ///   `elements` must be unique.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
