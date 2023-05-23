@@ -148,82 +148,96 @@ final class IdentifiedArrayTests: XCTestCase {
     let array: IdentifiedArray = [1, 2, 3]
     XCTAssertEqual(IdentifiedArray(array[...]), [1, 2, 3])
   }
-    
-    func testArbitraryInitId() {
-        let array = IdentifiedArray(arbitraryElements: ["A", "B", "C", "A"], id: \.self)
-        XCTAssertEqual(array, IdentifiedArray(uniqueElements: ["A", "B", "C"], id: \.self))
+
+  func testArbitraryInitId() {
+    let array = IdentifiedArray(arbitraryElements: ["A", "B", "C", "A"], id: \.self)
+    XCTAssertEqual(array, IdentifiedArray(uniqueElements: ["A", "B", "C"], id: \.self))
+  }
+
+  func testArbitraryInitIdCombined() {
+    struct Model: Equatable {
+      let id: Int
+      let data: String
     }
-    
-    func testArbitraryInitIdCombined() {
-        struct Model: Equatable {
-            let id: Int
-            let data: String
-        }
-        // Choose first element
-        do {
-            let array = IdentifiedArray(arbitraryElements: [
-                Model(id: 1, data: "A"),
-                Model(id: 2, data: "B"),
-                Model(id: 1, data: "AAAA"),
-            ], id: \.id, uniquingWith: { l, _ in l })
-            
-            XCTAssertEqual(array, IdentifiedArray(uniqueElements: [
-                Model(id: 1, data: "A"),
-                Model(id: 2, data: "B"),
-            ], id: \.id))
-        }
-        // Choose later element
-        do {
-            let array = IdentifiedArray(arbitraryElements: [
-                Model(id: 1, data: "A"),
-                Model(id: 2, data: "B"),
-                Model(id: 1, data: "AAAA"),
-            ], id: \.id, uniquingWith: { _, r in r })
-            
-            XCTAssertEqual(array, IdentifiedArray(uniqueElements: [
-                Model(id: 1, data: "AAAA"),
-                Model(id: 2, data: "B"),
-            ], id: \.id))
-        }
+    // Choose first element
+    do {
+      let array = IdentifiedArray(
+        arbitraryElements: [
+          Model(id: 1, data: "A"),
+          Model(id: 2, data: "B"),
+          Model(id: 1, data: "AAAA"),
+        ], id: \.id, uniquingWith: { l, _ in l })
+
+      XCTAssertEqual(
+        array,
+        IdentifiedArray(
+          uniqueElements: [
+            Model(id: 1, data: "A"),
+            Model(id: 2, data: "B"),
+          ], id: \.id))
     }
-    
-    func testArbitraryInit() {
-        let array = IdentifiedArray(arbitraryElements: [1, 2, 3, 1])
-        XCTAssertEqual(array, [1, 2, 3])
+    // Choose later element
+    do {
+      let array = IdentifiedArray(
+        arbitraryElements: [
+          Model(id: 1, data: "A"),
+          Model(id: 2, data: "B"),
+          Model(id: 1, data: "AAAA"),
+        ], id: \.id, uniquingWith: { _, r in r })
+
+      XCTAssertEqual(
+        array,
+        IdentifiedArray(
+          uniqueElements: [
+            Model(id: 1, data: "AAAA"),
+            Model(id: 2, data: "B"),
+          ], id: \.id))
     }
-    
-    func testArbitraryInitCombined() {
-        struct Model: Equatable, Identifiable {
-            let id: Int
-            let data: String
-        }
-        // Choose first element
-        do {
-            let array = IdentifiedArray(arbitraryElements: [
-                Model(id: 1, data: "A"),
-                Model(id: 2, data: "B"),
-                Model(id: 1, data: "AAAA"),
-            ], uniquingWith: { l, _ in l })
-            
-            XCTAssertEqual(array, IdentifiedArray(uniqueElements: [
-                Model(id: 1, data: "A"),
-                Model(id: 2, data: "B"),
-            ]))
-        }
-        // Choose later element
-        do {
-            let array = IdentifiedArray(arbitraryElements: [
-                Model(id: 1, data: "A"),
-                Model(id: 2, data: "B"),
-                Model(id: 1, data: "AAAA"),
-            ], uniquingWith: { _, r in r })
-            
-            XCTAssertEqual(array, IdentifiedArray(uniqueElements: [
-                Model(id: 1, data: "AAAA"),
-                Model(id: 2, data: "B"),
-            ]))
-        }
+  }
+
+  func testArbitraryInit() {
+    let array = IdentifiedArray(arbitraryElements: [1, 2, 3, 1])
+    XCTAssertEqual(array, [1, 2, 3])
+  }
+
+  func testArbitraryInitCombined() {
+    struct Model: Equatable, Identifiable {
+      let id: Int
+      let data: String
     }
+    // Choose first element
+    do {
+      let array = IdentifiedArray(
+        arbitraryElements: [
+          Model(id: 1, data: "A"),
+          Model(id: 2, data: "B"),
+          Model(id: 1, data: "AAAA"),
+        ], uniquingWith: { l, _ in l })
+
+      XCTAssertEqual(
+        array,
+        IdentifiedArray(uniqueElements: [
+          Model(id: 1, data: "A"),
+          Model(id: 2, data: "B"),
+        ]))
+    }
+    // Choose later element
+    do {
+      let array = IdentifiedArray(
+        arbitraryElements: [
+          Model(id: 1, data: "A"),
+          Model(id: 2, data: "B"),
+          Model(id: 1, data: "AAAA"),
+        ], uniquingWith: { _, r in r })
+
+      XCTAssertEqual(
+        array,
+        IdentifiedArray(uniqueElements: [
+          Model(id: 1, data: "AAAA"),
+          Model(id: 2, data: "B"),
+        ]))
+    }
+  }
 
   func testAppend() {
     var array: IdentifiedArray = [1, 2, 3]
