@@ -86,7 +86,7 @@ extension IdentifiedArray {
   public init<S: Sequence>(
     _ elements: S,
     id: KeyPath<Element, ID>,
-    uniquingElementsWith combine: (Element, Element) throws -> Element
+    uniquingIDsWith combine: (Element, Element) throws -> Element
   ) rethrows where S.Element == Element {
     try self.init(
       id: id,
@@ -202,7 +202,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   @inlinable
   public init<S: Sequence>(
     _ elements: S,
-    uniquingElementsWith combine: (Element, Element) throws -> Element
+    uniquingIDsWith combine: (Element, Element) throws -> Element
   ) rethrows where S.Element == Element {
     try self.init(
       id: \.id,
