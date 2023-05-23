@@ -149,12 +149,7 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual(IdentifiedArray(array[...]), [1, 2, 3])
   }
 
-  func testArbitraryInitId() {
-    let array = IdentifiedArray(arbitraryElements: ["A", "B", "C", "A"], id: \.self)
-    XCTAssertEqual(array, IdentifiedArray(uniqueElements: ["A", "B", "C"], id: \.self))
-  }
-
-  func testArbitraryInitIdCombined() {
+  func testInitIDUniquingElements() {
     struct Model: Equatable {
       let id: Int
       let data: String
@@ -162,11 +157,13 @@ final class IdentifiedArrayTests: XCTestCase {
     // Choose first element
     do {
       let array = IdentifiedArray(
-        arbitraryElements: [
+        [
           Model(id: 1, data: "A"),
           Model(id: 2, data: "B"),
           Model(id: 1, data: "AAAA"),
-        ], id: \.id, uniquingWith: { l, _ in l })
+        ],
+        id: \.id
+      ) { lhs, _ in lhs }
 
       XCTAssertEqual(
         array,
@@ -174,16 +171,21 @@ final class IdentifiedArrayTests: XCTestCase {
           uniqueElements: [
             Model(id: 1, data: "A"),
             Model(id: 2, data: "B"),
-          ], id: \.id))
+          ],
+          id: \.id
+        )
+      )
     }
     // Choose later element
     do {
       let array = IdentifiedArray(
-        arbitraryElements: [
+        [
           Model(id: 1, data: "A"),
           Model(id: 2, data: "B"),
           Model(id: 1, data: "AAAA"),
-        ], id: \.id, uniquingWith: { _, r in r })
+        ],
+        id: \.id
+      ) { _, rhs in rhs }
 
       XCTAssertEqual(
         array,
@@ -195,12 +197,7 @@ final class IdentifiedArrayTests: XCTestCase {
     }
   }
 
-  func testArbitraryInit() {
-    let array = IdentifiedArray(arbitraryElements: [1, 2, 3, 1])
-    XCTAssertEqual(array, [1, 2, 3])
-  }
-
-  func testArbitraryInitCombined() {
+  func testInitUniquingElements() {
     struct Model: Equatable, Identifiable {
       let id: Int
       let data: String
@@ -208,34 +205,42 @@ final class IdentifiedArrayTests: XCTestCase {
     // Choose first element
     do {
       let array = IdentifiedArray(
-        arbitraryElements: [
+        [
           Model(id: 1, data: "A"),
           Model(id: 2, data: "B"),
           Model(id: 1, data: "AAAA"),
-        ], uniquingWith: { l, _ in l })
+        ]
+      ) { lhs, _ in lhs }
 
       XCTAssertEqual(
         array,
-        IdentifiedArray(uniqueElements: [
-          Model(id: 1, data: "A"),
-          Model(id: 2, data: "B"),
-        ]))
+        IdentifiedArray(
+          uniqueElements: [
+            Model(id: 1, data: "A"),
+            Model(id: 2, data: "B"),
+          ]
+        )
+      )
     }
     // Choose later element
     do {
       let array = IdentifiedArray(
-        arbitraryElements: [
+        [
           Model(id: 1, data: "A"),
           Model(id: 2, data: "B"),
           Model(id: 1, data: "AAAA"),
-        ], uniquingWith: { _, r in r })
+        ]
+      ) { _, rhs in rhs }
 
       XCTAssertEqual(
         array,
-        IdentifiedArray(uniqueElements: [
-          Model(id: 1, data: "AAAA"),
-          Model(id: 2, data: "B"),
-        ]))
+        IdentifiedArray(
+          uniqueElements: [
+            Model(id: 1, data: "AAAA"),
+            Model(id: 2, data: "B"),
+          ]
+        )
+      )
     }
   }
 

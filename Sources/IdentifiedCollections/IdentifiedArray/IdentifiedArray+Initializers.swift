@@ -11,8 +11,8 @@ extension IdentifiedArray {
   /// value that may be difficult to debug.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array. Every element in `elements`
+  ///     must have a unique id.
   ///   - id: The key path to an element's identifier.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
@@ -38,8 +38,8 @@ extension IdentifiedArray {
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array. Every element in `elements`
+  ///     must have a unique id.
   ///   - id: The key path to an element's identifier.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
@@ -66,53 +66,26 @@ extension IdentifiedArray {
     )
   }
 
-  /// Creates a new array from the elements in the given sequence.
+  /// Creates a new array from the elements in the given sequence, using a combining closure to
+  /// determine the element for any elements with duplicate identity.
   ///
   /// You use this initializer to create an array when you have an arbitrary sequence of elements
-  /// that may not have unique ids. It's safe to pass a sequence with duplicate ids to this initializer,
-  /// later duplicated elements will be discarded.
+  /// that may not have unique ids. This initializer calls the `combine` closure with the current
+  /// and new elements for any duplicate ids. Pass a closure as `combine` that returns the element
+  /// to use in the resulting array: The closure can choose between the two elements, combine them
+  /// to produce a new element, or even throw an error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array.
   ///   - id: The key path to an element's identifier.
-  /// - Returns: A new array initialized with the unique elements of `elements`.
-  /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
-  ///   implements high-quality hashing.
-  @inlinable
-  public init<S>(
-    arbitraryElements elements: S,
-    id: KeyPath<Element, ID>
-  )
-  where S: Sequence, S.Element == Element {
-    self.init(
-      arbitraryElements: elements,
-      id: id,
-      uniquingWith: { l, _ in l }
-    )
-  }
-
-  /// Creates a new array from the elements in the given sequence, using a combining closure to determine
-  ///  the element for any duplicate elements.
-  ///
-  /// You use this initializer to create an array when you have an arbitrary sequence of elements
-  /// that may not have unique ids. This initializer calls the combine closure with the current and
-  ///  new values for any duplicate ids. Pass a closure as combine that returns the value to use in
-  ///  the resulting dictionary: The closure can choose between the two values, combine them to produce
-  ///  a new value, or even throw an error.
-  ///
-  /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
-  ///   - id: The key path to an element's identifier.
-  ///   - combine: Closure used to combine duplicated elements.
+  ///   - combine: Closure used to combine elements with duplicate ids.
   /// - Returns: A new array initialized with the unique elements of `elements`.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
   ///   implements high-quality hashing.
   public init<S: Sequence>(
-    arbitraryElements elements: S,
+    _ elements: S,
     id: KeyPath<Element, ID>,
-    uniquingWith combine: (Element, Element) throws -> Element
+    uniquingIDsWith combine: (Element, Element) throws -> Element
   ) rethrows where S.Element == Element {
     try self.init(
       id: id,
@@ -165,8 +138,8 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// you accidentally call this initializer with duplicate members, it can return a corrupt array
   /// value that may be difficult to debug.
   ///
-  /// - Parameter elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///   must be unique.
+  /// - Parameter elements: A sequence of elements to use for the new array. Every element in
+  ///   `elements` must have a unique id.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
@@ -186,8 +159,8 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// You use this initializer to create an array when you have a sequence of elements with unique
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
-  /// - Parameters elements: A sequence of elements to use for the new array. Every key in
-  ///   `elements` must be unique.
+  /// - Parameter elements: A sequence of elements to use for the new array. Every element in
+  ///   `elements` must have a unique id.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
@@ -209,46 +182,25 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
     )
   }
 
-  /// Creates a new array from the elements in the given sequence.
+  /// Creates a new array from the elements in the given sequence, using a combining closure to
+  /// determine the element for any elements with duplicate ids.
   ///
   /// You use this initializer to create an array when you have an arbitrary sequence of elements
-  /// that may not have unique ids. It's safe to pass a sequence with duplicate ids to this initializer,
-  /// later duplicated elements will be discarded.
+  /// that may not have unique ids. This initializer calls the `combine` closure with the current
+  /// and new elements for any duplicate ids. Pass a closure as `combine` that returns the element
+  /// to use in the resulting array: The closure can choose between the two elements, combine them
+  /// to produce a new element, or even throw an error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
-  /// - Returns: A new array initialized with the unique elements of `elements`.
-  /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
-  ///   implements high-quality hashing.
-  @inlinable
-  public init<S>(arbitraryElements elements: S) where S: Sequence, S.Element == Element {
-    self.init(
-      arbitraryElements: elements,
-      uniquingWith: { l, _ in l }
-    )
-  }
-
-  /// Creates a new array from the elements in the given sequence, using a combining closure to determine
-  ///  the element for any duplicate elements.
-  ///
-  /// You use this initializer to create an array when you have an arbitrary sequence of elements
-  /// that may not have unique ids. This initializer calls the combine closure with the current and
-  ///  new values for any duplicate ids. Pass a closure as combine that returns the value to use in
-  ///  the resulting dictionary: The closure can choose between the two values, combine them to produce
-  ///  a new value, or even throw an error.
-  ///
-  /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array.
   ///   - combine: Closure used to combine duplicated elements.
   /// - Returns: A new array initialized with the unique elements of `elements`.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
   ///   implements high-quality hashing.
   @inlinable
   public init<S: Sequence>(
-    arbitraryElements elements: S,
-    uniquingWith combine: (Element, Element) throws -> Element
+    _ elements: S,
+    uniquingIDsWith combine: (Element, Element) throws -> Element
   ) rethrows where S.Element == Element {
     try self.init(
       id: \.id,
