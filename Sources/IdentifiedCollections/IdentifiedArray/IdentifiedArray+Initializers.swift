@@ -38,8 +38,8 @@ extension IdentifiedArray {
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in
-  ///     `keysAndValues` must be unique.
+  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
+  ///     must be unique.
   ///   - id: The key path to an element's identifier.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
@@ -65,6 +65,64 @@ extension IdentifiedArray {
       _dictionary: .init(uniqueKeysWithValues: elements.lazy.map { ($0[keyPath: id], $0) })
     )
   }
+    
+    /// Creates a new array from the elements in the given sequence.
+    ///
+    /// You use this initializer to create an array when you have an arbitrary sequence of elements
+    /// that may not have unique ids. It's safe to pass a sequence with duplicate ids to this initializer,
+    /// later duplicated elements will be discarded.
+    ///
+    /// - Parameters:
+    ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
+    ///     must be unique.
+    ///   - id: The key path to an element's identifier.
+    /// - Returns: A new array initialized with the unique elements of `elements`.
+    /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
+    ///   implements high-quality hashing.
+    @inlinable
+    public init<S>(
+        arbitraryElements elements: S,
+        id: KeyPath<Element, ID>
+    )
+    where S: Sequence, S.Element == Element {
+        self.init(
+            arbitraryElements: elements,
+            id: id,
+            uniquingWith: { l, _ in l }
+        )
+    }
+    
+    /// Creates a new array from the elements in the given sequence, using a combining closure to determine
+    ///  the element for any duplicate elements.
+    ///
+    /// You use this initializer to create an array when you have an arbitrary sequence of elements
+    /// that may not have unique ids. This initializer calls the combine closure with the current and
+    ///  new values for any duplicate ids. Pass a closure as combine that returns the value to use in
+    ///  the resulting dictionary: The closure can choose between the two values, combine them to produce
+    ///  a new value, or even throw an error.
+    ///
+    /// - Parameters:
+    ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
+    ///     must be unique.
+    ///   - id: The key path to an element's identifier.
+    ///   - combine: Closure used to combine duplicated elements.
+    /// - Returns: A new array initialized with the unique elements of `elements`.
+    /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
+    ///   implements high-quality hashing.
+    public init<S: Sequence>(
+        arbitraryElements elements: S,
+        id: KeyPath<Element, ID>,
+        uniquingWith combine: (Element, Element) throws -> Element
+    ) rethrows where S.Element == Element {
+        try self.init(
+          id: id,
+          _id: { $0[keyPath: id] },
+          _dictionary: .init(
+            elements.lazy.map { ($0[keyPath: id], $0) },
+            uniquingKeysWith: combine
+          )
+        )
+    }
 
   /// Creates a new array from an existing array. This is functionally the same as copying the value
   /// of `elements` into a new variable.
@@ -129,7 +187,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
   /// - Parameters elements: A sequence of elements to use for the new array. Every key in
-  ///   `keysAndValues` must be unique.
+  ///   `elements` must be unique.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
@@ -150,6 +208,57 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
       _dictionary: .init(uniqueKeysWithValues: elements.lazy.map { ($0.id, $0) })
     )
   }
+    
+    /// Creates a new array from the elements in the given sequence.
+    ///
+    /// You use this initializer to create an array when you have an arbitrary sequence of elements
+    /// that may not have unique ids. It's safe to pass a sequence with duplicate ids to this initializer,
+    /// later duplicated elements will be discarded.
+    ///
+    /// - Parameters:
+    ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
+    ///     must be unique.
+    /// - Returns: A new array initialized with the unique elements of `elements`.
+    /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
+    ///   implements high-quality hashing.
+    @inlinable
+    public init<S>(arbitraryElements elements: S) where S: Sequence, S.Element == Element {
+        self.init(
+            arbitraryElements: elements,
+            uniquingWith: { l, _ in l }
+        )
+    }
+    
+    /// Creates a new array from the elements in the given sequence, using a combining closure to determine
+    ///  the element for any duplicate elements.
+    ///
+    /// You use this initializer to create an array when you have an arbitrary sequence of elements
+    /// that may not have unique ids. This initializer calls the combine closure with the current and
+    ///  new values for any duplicate ids. Pass a closure as combine that returns the value to use in
+    ///  the resulting dictionary: The closure can choose between the two values, combine them to produce
+    ///  a new value, or even throw an error.
+    ///
+    /// - Parameters:
+    ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
+    ///     must be unique.
+    ///   - combine: Closure used to combine duplicated elements.
+    /// - Returns: A new array initialized with the unique elements of `elements`.
+    /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
+    ///   implements high-quality hashing.
+    @inlinable
+    public init<S: Sequence>(
+        arbitraryElements elements: S,
+        uniquingWith combine: (Element, Element) throws -> Element
+    ) rethrows where S.Element == Element {
+        try self.init(
+          id: \.id,
+          _id: { $0.id },
+          _dictionary: .init(
+            elements.lazy.map { ($0.id, $0) },
+            uniquingKeysWith: combine
+          )
+        )
+    }
 }
 
 // MARK: - Deprecations
