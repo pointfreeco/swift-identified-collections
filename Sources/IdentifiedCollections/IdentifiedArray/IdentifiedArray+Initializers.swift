@@ -11,8 +11,8 @@ extension IdentifiedArray {
   /// value that may be difficult to debug.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array. Every element in `elements`
+  ///     must have a unique id.
   ///   - id: The key path to an element's identifier.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
@@ -38,8 +38,8 @@ extension IdentifiedArray {
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array. Every element in `elements`
+  ///     must have a unique id.
   ///   - id: The key path to an element's identifier.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
@@ -76,8 +76,7 @@ extension IdentifiedArray {
   /// to produce a new element, or even throw an error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every element in `elements`
-  ///     must have a unique id.
+  ///   - elements: A sequence of elements to use for the new array.
   ///   - id: The key path to an element's identifier.
   ///   - combine: Closure used to combine elements with duplicate ids.
   /// - Returns: A new array initialized with the unique elements of `elements`.
@@ -139,8 +138,8 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// you accidentally call this initializer with duplicate members, it can return a corrupt array
   /// value that may be difficult to debug.
   ///
-  /// - Parameter elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///   must be unique.
+  /// - Parameter elements: A sequence of elements to use for the new array. Every element in
+  ///   `elements` must have a unique id.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
@@ -160,8 +159,8 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// You use this initializer to create an array when you have a sequence of elements with unique
   /// ids. Passing a sequence with duplicate ids to this initializer results in a runtime error.
   ///
-  /// - Parameters elements: A sequence of elements to use for the new array. Every key in
-  ///   `elements` must be unique.
+  /// - Parameter elements: A sequence of elements to use for the new array. Every element in
+  ///   `elements` must have a unique id.
   /// - Returns: A new array initialized with the elements of `elements`.
   /// - Precondition: The sequence must not have duplicate ids.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
@@ -193,8 +192,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// to produce a new element, or even throw an error.
   ///
   /// - Parameters:
-  ///   - elements: A sequence of elements to use for the new array. Every key in `elements`
-  ///     must be unique.
+  ///   - elements: A sequence of elements to use for the new array.
   ///   - combine: Closure used to combine duplicated elements.
   /// - Returns: A new array initialized with the unique elements of `elements`.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
