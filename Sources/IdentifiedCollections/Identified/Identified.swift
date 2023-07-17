@@ -59,6 +59,4 @@ extension Identified: Equatable where Value: Equatable {}
 
 extension Identified: Hashable where Value: Hashable {}
 
-#if canImport(_Concurrency) && compiler(>=5.5.2)
 extension Identified: Sendable where ID: Sendable, Value: Sendable {}
-#endif
