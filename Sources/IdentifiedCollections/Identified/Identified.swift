@@ -58,3 +58,5 @@ extension Identified: Encodable where ID: Encodable, Value: Encodable {}
 extension Identified: Equatable where Value: Equatable {}
 
 extension Identified: Hashable where Value: Hashable {}
+
+extension Identified: Sendable where ID: Sendable, Value: Sendable {}
