@@ -2,19 +2,6 @@
 
 import PackageDescription
 
-var dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/apple/swift-collections", from: "1.0.2"),
-    .package(url: "https://github.com/apple/swift-collections-benchmark", from: "0.0.2"),
-]
-
-#if !os(Windows)
-// DocC needs to be ported to Windows
-// https://github.com/thebrowsercompany/swift-build/issues/39
-dependencies.append(
-  .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
-)
-#endif
-
 let package = Package(
   name: "swift-identified-collections",
   products: [
@@ -23,7 +10,10 @@ let package = Package(
       targets: ["IdentifiedCollections"]
     )
   ],
-  dependencies: dependencies,
+  dependencies: [
+    .package(url: "https://github.com/apple/swift-collections", from: "1.0.2"),
+    .package(url: "https://github.com/apple/swift-collections-benchmark", from: "0.0.2"),
+  ],
   targets: [
     .target(
       name: "IdentifiedCollections",
@@ -44,3 +34,11 @@ let package = Package(
     ),
   ]
 )
+
+#if !os(Windows)
+  // DocC needs to be ported to Windows
+  // https://github.com/thebrowsercompany/swift-build/issues/39
+  package.dependencies.append(
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+  )
+#endif
