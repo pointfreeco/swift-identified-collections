@@ -13,7 +13,6 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/apple/swift-collections", from: "1.0.2"),
     .package(url: "https://github.com/apple/swift-collections-benchmark", from: "0.0.2"),
-    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
   ],
   targets: [
     .target(
@@ -35,3 +34,11 @@ let package = Package(
     ),
   ]
 )
+
+#if !os(Windows)
+  // DocC needs to be ported to Windows
+  // https://github.com/thebrowsercompany/swift-build/issues/39
+  package.dependencies.append(
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+  )
+#endif
