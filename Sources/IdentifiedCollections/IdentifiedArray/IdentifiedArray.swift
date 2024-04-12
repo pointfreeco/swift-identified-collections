@@ -232,41 +232,6 @@ import OrderedCollections
 /// Identified arrays are random-access collections. Members are assigned integer indices, with the
 /// first element always being at index `0`.
 ///
-/// Because ``IdentifiedArray`` needs to keep its members unique, it cannot conform to the full
-/// `MutableCollection` or `RangeReplaceableCollection` protocols. Operations such as
-/// `MutableCollection`'s subscript setter or `RangeReplaceableCollection`'s `replaceSubrange`
-/// assume the ability to insert/replace arbitrary elements in the collection, but allowing that
-/// could lead to duplicate values.
-///
-/// However, ``IdentifiedArray`` is able to partially implement these two protocols; namely, there
-/// is no issue with mutation operations that merely change the order of elements, or just remove
-/// some subset of existing members:
-///
-/// ```swift
-/// // Permutation operations from MutableCollection:
-/// func swapAt(_ i: Int, _ j: Int)
-/// func partition(by predicate: (Element) throws -> Bool) -> rethrows Int
-/// func sort() where Element: Comparable
-/// func sort(by predicate: (Element, Element) throws -> Bool) rethrows
-/// func shuffle()
-/// func shuffle<T: RandomNumberGenerator>(using generator: inout T)
-/// func reverse()
-///
-/// // Removal operations from RangeReplaceableCollection:
-/// func removeAll(keepingCapacity: Bool = false)
-/// func remove(at index: Int) -> Element
-/// func removeSubrange(_ bounds: Range<Int>)
-/// func removeLast() -> Element
-/// func removeLast(_ n: Int)
-/// func removeFirst() -> Element
-/// func removeFirst(_ n: Int)
-/// func removeAll(where shouldBeRemoved: (Element) throws -> Bool) rethrows
-/// ```
-///
-/// ``IdentifiedArray`` also implements `reserveCapacity(_)` from `RangeReplaceableCollection`, to
-/// allow for efficient insertion of a known number of elements. (However, unlike `Array` and `Set`,
-/// `OrderedSet` does not provide a `capacity` property.)
-///
 /// # Performance
 ///
 /// Like the standard `Dictionary` type, the performance of hashing operations in
