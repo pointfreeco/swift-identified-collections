@@ -17,9 +17,9 @@ public struct Identified<ID: Hashable, Value>: Identifiable {
   /// Initializes an identified value from a given value and a function that can return a hashable
   /// identifier from the value.
   ///
-  ///    ```swift
-  ///     Identified(uuid, id: \.self)
-  ///    ```
+  /// ```swift
+  /// Identified(uuid, id: \.self)
+  /// ```
   ///
   /// - Parameters:
   ///   - value: A value.
@@ -32,9 +32,9 @@ public struct Identified<ID: Hashable, Value>: Identifiable {
   /// Initializes an identified value from a given value and a function that can return a hashable
   /// identifier from the value.
   ///
-  ///    ```swift
-  ///     Identified(uuid, id: \.self)
-  ///    ```
+  /// ```swift
+  /// Identified(uuid, id: \.self)
+  /// ```
   ///
   /// - Parameters:
   ///   - value: A value.
