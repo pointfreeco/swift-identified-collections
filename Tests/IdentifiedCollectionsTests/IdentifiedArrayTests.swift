@@ -368,4 +368,14 @@ final class IdentifiedArrayTests: XCTestCase {
       })
     })
   }
+
+  func testIdentifiedArraySubscript() {
+    struct Item: Identifiable {
+      let id: Int
+    }
+    var items: IdentifiedArrayOf<Item> = [Item(id: 1), Item(id: 2), Item(id: 3)]
+    items[1] = Item(id: 4)
+    XCTAssertEqual(3, items.count)
+    XCTAssertEqual([1, 4, 3], items.map(\.id))
+  }
 }
