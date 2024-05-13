@@ -379,12 +379,14 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertEqual([1, 4, 3], items.map(\.id))
   }
 
-  func testIdentifiedArrayComparatorSort() {
-    struct Item: Identifiable {
-      let id: Int
+  #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    func testIdentifiedArrayComparatorSort() {
+      struct Item: Identifiable {
+        let id: Int
+      }
+      var items: IdentifiedArrayOf<Item> = [Item(id: 3), Item(id: 2), Item(id: 1)]
+      items.sort(using: KeyPathComparator(\.id))
+      XCTAssertEqual([1, 2, 3], items.map(\.id))
     }
-    var items: IdentifiedArrayOf<Item> = [Item(id: 3), Item(id: 2), Item(id: 1)]
-    items.sort(using: KeyPathComparator(\.id))
-    XCTAssertEqual([1, 2, 3], items.map(\.id))
-  }
+  #endif
 }
