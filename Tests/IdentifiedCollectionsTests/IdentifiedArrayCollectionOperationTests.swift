@@ -8,9 +8,11 @@ final class IdentifiedArrayCollectionOperationsTests: XCTestCase {
   func testSort() {
     assertElementsEqual { $0.sort() }
   }
-  func testSortUsing() {
-    assertElementsEqual { $0.sort(using: KeyPathComparator(\.count)) }
-  }
+  #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+    func testSortUsing() {
+      assertElementsEqual { $0.sort(using: KeyPathComparator(\.count)) }
+    }
+  #endif
 }
 
 private struct Item: Identifiable, Comparable, Equatable {
