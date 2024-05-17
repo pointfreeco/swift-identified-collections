@@ -6,13 +6,14 @@ extension IdentifiedArray: MutableCollection {
   public subscript(position: Int) -> Element {
     _read { yield self._dictionary.elements.values[position] }
     set {
-      self._dictionary.remove(at: position)
       let key = _id(newValue)
-      precondition(
-        !self._dictionary.keys.contains(key),
-        "Collection already contains element with this identity"
-      )
-      self._dictionary.updateValue(newValue, forKey: key, insertingAt: position)
+      if let index = self._dictionary.keys.firstIndex(of: key) {
+        self._dictionary.swapAt(index, position)
+        self._dictionary.updateValue(newValue, forKey: key)
+      } else {
+        self._dictionary.remove(at: position)
+        self._dictionary.updateValue(newValue, forKey: key, insertingAt: position)
+      }
     }
     _modify {
       yield &self._dictionary.elements.values[position]
