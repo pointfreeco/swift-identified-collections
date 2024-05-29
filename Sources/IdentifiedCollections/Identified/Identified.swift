@@ -43,11 +43,19 @@ public struct Identified<ID: Hashable, Value>: Identifiable {
     self.init(value, id: value[keyPath: id])
   }
 
+  /// Returns the resulting value of a given writeable key path.
   public subscript<Subject>(
     dynamicMember keyPath: WritableKeyPath<Value, Subject>
   ) -> Subject {
     get { self.value[keyPath: keyPath] }
     set { self.value[keyPath: keyPath] = newValue }
+  }
+
+  /// Returns the resulting value of a given key path.
+  public subscript<Subject>(
+    dynamicMember keyPath: KeyPath<Value, Subject>
+  ) -> Subject {
+      self.value[keyPath: keyPath]
   }
 }
 
