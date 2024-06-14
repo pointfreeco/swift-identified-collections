@@ -1,8 +1,13 @@
 import CollectionsBenchmark
 import IdentifiedCollections
 
-@available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
-extension Int: Identifiable { public var id: Self { self } }
+#if $RetroactiveAttribute
+  @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
+  extension Int: @retroactive Identifiable { public var id: Self { self } }
+#else
+  @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
+  extension Int: Identifiable { public var id: Self { self } }
+#endif
 
 if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
   var benchmark = Benchmark(title: "Identified Collections Benchmark")
