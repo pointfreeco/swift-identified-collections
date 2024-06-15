@@ -14,8 +14,9 @@ where Element: Identifiable, ID == Element.ID {
   }
 
   @inlinable
-  public mutating func replaceSubrange<C: Collection>(_ subrange: Range<Int>, with newElements: C)
-  where C.Element == Element {
+  public mutating func replaceSubrange(
+    _ subrange: Range<Int>, with newElements: some Collection<Element>
+  ) {
     self._dictionary.removeSubrange(subrange)
     self._dictionary.reserveCapacity(self.count + newElements.count)
     for element in newElements.reversed() {

@@ -23,8 +23,7 @@ extension IdentifiedArray {
   /// - Complexity: The operation is expected to perform amortized O(1) copy, hash, and compare
   ///   operations on the `Element` type, if it implements high-quality hashing.
   @inlinable
-  public mutating func append<S>(contentsOf newElements: S)
-  where Element == S.Element, S: Sequence {
+  public mutating func append(contentsOf newElements: some Sequence<Element>) {
     self.reserveCapacity(self.count + newElements.underestimatedCount)
     for element in newElements {
       self.append(element)
