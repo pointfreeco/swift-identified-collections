@@ -1,5 +1,5 @@
 /// A collection of elements that can be uniquely identified.
-public protocol IdentifiedCollection<ID, Element>: Collection {
+public protocol _IdentifiedCollection<ID, Element>: Collection {
   /// A type that uniquely identifies elements in the collection.
   associatedtype ID: Hashable
 
@@ -16,7 +16,8 @@ public protocol IdentifiedCollection<ID, Element>: Collection {
 }
 
 /// A mutable collection of elements that can be uniquely identified.
-public protocol MutableIdentifiedCollection<ID, Element>: IdentifiedCollection, MutableCollection {
+public protocol _MutableIdentifiedCollection<ID, Element>: _IdentifiedCollection, MutableCollection
+{
   /// Accesses the value associated with the given id for reading.
   subscript(id id: ID) -> Element? { get set }
 }

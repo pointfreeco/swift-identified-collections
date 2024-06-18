@@ -1,6 +1,6 @@
 import OrderedCollections
 
-extension IdentifiedArray: IdentifiedCollection {
+extension IdentifiedArray: _IdentifiedCollection {
   /// A read-only collection view for the ids contained in this array, as an `OrderedSet`.
   ///
   /// - Complexity: O(1)
@@ -9,7 +9,7 @@ extension IdentifiedArray: IdentifiedCollection {
   public var ids: OrderedSet<ID> { self._dictionary.keys }
 }
 
-extension IdentifiedArray: MutableIdentifiedCollection {
+extension IdentifiedArray: _MutableIdentifiedCollection {
   /// Accesses the value associated with the given id for reading and writing.
   ///
   /// This *id-based* subscript returns the element identified by the given id if found in the
