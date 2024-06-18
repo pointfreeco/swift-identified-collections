@@ -15,7 +15,8 @@ public protocol IdentifiedCollection<ID, Element>: Collection {
   subscript(id id: ID) -> Element? { get }
 }
 
-public protocol MutableIdentifiedCollection<ID, Element>: IdentifiedCollection {
+/// A mutable collection of elements that can be uniquely identified.
+public protocol MutableIdentifiedCollection<ID, Element>: IdentifiedCollection, MutableCollection {
   /// Accesses the value associated with the given id for reading.
   subscript(id id: ID) -> Element? { get set }
 }
