@@ -20,11 +20,10 @@ extension IdentifiedArray {
   ///   implements high-quality hashing.
   @inlinable
   @_disfavoredOverload
-  public init<S>(
-    uncheckedUniqueElements elements: S,
+  public init(
+    uncheckedUniqueElements elements: some Sequence<Element>,
     id: KeyPath<Element, ID>
-  )
-  where S: Sequence, S.Element == Element {
+  ) {
     self.init(
       id: id,
       _id: { $0[keyPath: id] },
@@ -46,11 +45,10 @@ extension IdentifiedArray {
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
   ///   implements high-quality hashing.
   @inlinable
-  public init<S>(
+  public init<S: Sequence<Element>>(
     uniqueElements elements: S,
     id: KeyPath<Element, ID>
-  )
-  where S: Sequence, S.Element == Element {
+  ) {
     if S.self == Self.self {
       self = elements as! Self
       return
@@ -82,11 +80,11 @@ extension IdentifiedArray {
   /// - Returns: A new array initialized with the unique elements of `elements`.
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
   ///   implements high-quality hashing.
-  public init<S: Sequence>(
-    _ elements: S,
+  public init(
+    _ elements: some Sequence<Element>,
     id: KeyPath<Element, ID>,
     uniquingIDsWith combine: (Element, Element) throws -> Element
-  ) rethrows where S.Element == Element {
+  ) rethrows {
     try self.init(
       id: id,
       _id: { $0[keyPath: id] },
@@ -146,7 +144,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   ///   implements high-quality hashing.
   @inlinable
   @_disfavoredOverload
-  public init<S>(uncheckedUniqueElements elements: S) where S: Sequence, S.Element == Element {
+  public init(uncheckedUniqueElements elements: some Sequence<Element>) {
     self.init(
       id: \.id,
       _id: { $0.id },
@@ -166,7 +164,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
   ///   implements high-quality hashing.
   @inlinable
-  public init<S>(uniqueElements elements: S) where S: Sequence, S.Element == Element {
+  public init<S: Sequence<Element>>(uniqueElements elements: S) {
     if S.self == Self.self {
       self = elements as! Self
       return
@@ -198,10 +196,10 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   /// - Complexity: Expected O(*n*) on average, where *n* is the count of elements, if `ID`
   ///   implements high-quality hashing.
   @inlinable
-  public init<S: Sequence>(
-    _ elements: S,
+  public init(
+    _ elements: some Sequence<Element>,
     uniquingIDsWith combine: (Element, Element) throws -> Element
-  ) rethrows where S.Element == Element {
+  ) rethrows {
     try self.init(
       id: \.id,
       _id: { $0.id },
@@ -217,7 +215,7 @@ extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
 
 extension IdentifiedArray {
   @available(*, deprecated, renamed: "init(uniqueElements:id:)")
-  public init<S>(_ elements: S, id: KeyPath<Element, ID>) where S: Sequence, S.Element == Element {
+  public init(_ elements: some Sequence<Element>, id: KeyPath<Element, ID>) {
     self.init(uniqueElements: elements, id: id)
   }
 }
@@ -225,7 +223,7 @@ extension IdentifiedArray {
 @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
 extension IdentifiedArray where Element: Identifiable, ID == Element.ID {
   @available(*, deprecated, renamed: "init(uniqueElements:)")
-  public init<S>(_ elements: S) where S: Sequence, S.Element == Element {
+  public init(_ elements: some Sequence<Element>) {
     self.init(uniqueElements: elements)
   }
 }

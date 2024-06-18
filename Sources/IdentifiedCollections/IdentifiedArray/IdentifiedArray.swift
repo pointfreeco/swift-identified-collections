@@ -261,7 +261,7 @@ import OrderedCollections
 /// should not be mutated in place, as it will drift from its associated dictionary key. Identified
 /// array is designed to avoid this invariant, with the exception of its *id-based* subscript.
 /// Mutating an element's id will result in a runtime error.
-public struct IdentifiedArray<ID, Element> where ID: Hashable {
+public struct IdentifiedArray<ID: Hashable, Element> {
   public let id: KeyPath<Element, ID>
 
   // NB: Captures identity access. Direct access to `Identifiable`'s `.id` property is faster than

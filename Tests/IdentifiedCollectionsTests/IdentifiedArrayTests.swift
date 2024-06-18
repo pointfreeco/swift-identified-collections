@@ -2,7 +2,11 @@ import XCTest
 
 @testable import IdentifiedCollections
 
-extension Int: Identifiable { public var id: Self { self } }
+#if $RetroactiveAttribute
+  extension Int: @retroactive Identifiable { public var id: Self { self } }
+#else
+  extension Int: Identifiable { public var id: Self { self } }
+#endif
 
 private struct User: Equatable, Identifiable {
   let id: Int
