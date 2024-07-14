@@ -7,3 +7,4 @@ builder:
     scheme: IdentifiedCollections
   - platform: watchos
     scheme: IdentifiedCollections
+  - documentation_targets: [IdentifiedCollections]
