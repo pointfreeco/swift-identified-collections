@@ -258,7 +258,7 @@ a particular problem, there are a number of places you can discuss with fellow
 ## Documentation
 
 The latest documentation for Identified Collections' APIs is available
-[here](https://pointfreeco.github.io/swift-identified-collections/main/documentation/identifiedcollections/).
+[here](https://swiftpackageindex.com/pointfreeco/swift-identified-collections/main/documentation/identifiedcollections).
 
 ## Translations
 
