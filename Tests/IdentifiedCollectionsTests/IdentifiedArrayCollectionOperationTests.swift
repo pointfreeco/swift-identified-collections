@@ -50,7 +50,8 @@ private struct Item: Identifiable, Comparable, Equatable {
 }
 
 private protocol TestCollection<Element>:
-MutableCollection, RandomAccessCollection, RangeReplaceableCollection {}
+  MutableCollection, RandomAccessCollection, RangeReplaceableCollection
+{}
 
 extension Array: TestCollection {}
 extension IdentifiedArray: TestCollection where Element: Identifiable, Element.ID == ID {}

@@ -53,7 +53,7 @@ public struct Identified<ID: Hashable, Value>: Identifiable {
   public subscript<Subject>(
     dynamicMember keyPath: KeyPath<Value, Subject>
   ) -> Subject {
-      self.value[keyPath: keyPath]
+    self.value[keyPath: keyPath]
   }
 }
 
