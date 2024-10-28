@@ -4,7 +4,7 @@ public protocol _IdentifiedCollection<ID, Element>: Collection {
   associatedtype ID: Hashable
 
   /// A type that describes all of the ids in the collection.
-  associatedtype IDs: Collection<ID>
+  associatedtype IDs: Collection<ID> where IDs.Index == Index
 
   /// A collection of ids associated with elements in the collection.
   ///
