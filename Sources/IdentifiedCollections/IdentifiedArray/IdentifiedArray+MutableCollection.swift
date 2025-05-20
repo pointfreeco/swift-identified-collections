@@ -117,6 +117,44 @@ extension IdentifiedArray: MutableCollection {
     try self._dictionary.sort(by: { try areInIncreasingOrder($0.value, $1.value) })
   }
 
+  /// Returns a copy of the collection, sorted using the given predicate as
+  /// the comparison between elements.
+  ///
+  /// When you want to sort a collection of elements that don't conform to the `Comparable`
+  /// protocol, pass a closure to this method that returns `true` when the first element should be
+  /// ordered before the second.
+  ///
+  /// Alternatively, use this method to sort a collection of elements that do conform to
+  /// `Comparable` when you want the sort to be descending instead of ascending. Pass the
+  /// greater-than operator (`>`) operator as the predicate.
+  ///
+  /// `areInIncreasingOrder` must be a *strict weak ordering* over the elements. That is, for any
+  /// elements `a`, `b`, and `c`, the following conditions must hold:
+  ///
+  ///   * `areInIncreasingOrder(a, a)` is always `false`. (Irreflexivity)
+  ///   * If `areInIncreasingOrder(a, b)` and `areInIncreasingOrder(b, c)` are both `true`, then
+  ///     `areInIncreasingOrder(a, c)` is also `true`. (Transitive comparability)
+  ///   * Two elements are *incomparable* if neither is ordered before the other according to the
+  ///     predicate. If `a` and `b` are incomparable, and `b` and `c` are incomparable, then `a`
+  ///     and `c` are also incomparable. (Transitive incomparability)
+  ///
+  /// The sorting algorithm is not guaranteed to be stable. A stable sort preserves the relative
+  /// order of elements for which `areInIncreasingOrder` does not establish an order.
+  ///
+  /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should
+  ///   be ordered before its second argument; otherwise, `false`. If `areInIncreasingOrder` throws
+  ///   an error during the sort, the elements may be in a different order, but none will be lost.
+  /// - Complexity: O(*n* log *n*), where *n* is the length of the collection.
+  /// - Returns: A sorted copy of this collection.
+  @inlinable
+  public func sorted(
+    by areInIncreasingOrder: (Element, Element) throws -> Bool
+  ) rethrows -> Self {
+    var copy = self
+    try copy.sort(by: areInIncreasingOrder)
+    return copy
+  }
+
   /// Exchanges the values at the specified indices of the array.
   ///
   /// Both parameters must be valid indices below ``endIndex``. Passing the same index as both `i`
@@ -149,5 +187,23 @@ extension IdentifiedArray where Element: Comparable {
   @inlinable
   public mutating func sort() {
     self.sort(by: <)
+  }
+  
+  /// Returns a sorted copy of the collection.
+  ///
+  /// You can sort an ordered set of elements that conform to the `Comparable` protocol by calling
+  /// this method. Elements are sorted in ascending order.
+  ///
+  /// To sort the elements of your collection in descending order, pass the greater-than operator
+  /// (`>`) to the ``sort(by:)`` method.
+  ///
+  /// The sorting algorithm is not guaranteed to be stable. A stable sort preserves the relative
+  /// order of elements that compare equal.
+  ///
+  /// - Complexity: O(*n* log *n*), where *n* is the length of the collection.
+  /// - Returns: A sorted copy of this collection.
+  @inlinable
+  public func sorted() -> Self {
+    self.sorted(by: <)
   }
 }
