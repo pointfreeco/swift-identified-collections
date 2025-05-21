@@ -53,7 +53,7 @@ jobs:
   #       run: swift build -c ${{ matrix.config }}
   #     - name: Run tests (debug only)
   #       if: ${{ matrix.config == 'debug' }}
-        run: swift test
+  #       run: swift test
 
   android:
     name: Android (Swift 6.0.2)
