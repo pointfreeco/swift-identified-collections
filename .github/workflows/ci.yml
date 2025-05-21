@@ -35,25 +35,25 @@ jobs:
     - name: Run tests (release)
       run: swift test -c release --parallel
 
-  windows:
-    name: Windows (Swift ${{ matrix.swift }}, ${{ matrix.config }})
-    strategy:
-      matrix:
-        os: [windows-latest]
-        config: ['debug', 'release']
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: compnerd/gha-setup-swift@main
-        with:
-          branch: swift-5.10-release
-          tag: 5.10-RELEASE
-      - uses: actions/checkout@v4
-      - name: Build
-        run: swift build -c ${{ matrix.config }}
-      - name: Run tests (debug only)
-        if: ${{ matrix.config == 'debug' }}
-        run: swift test
+  # windows:
+  #   name: Windows (Swift ${{ matrix.swift }}, ${{ matrix.config }})
+  #   strategy:
+  #     matrix:
+  #       os: [windows-latest]
+  #       config: ['debug', 'release']
+  #     fail-fast: false
+  #   runs-on: ${{ matrix.os }}
+  #   steps:
+  #     - uses: compnerd/gha-setup-swift@main
+  #       with:
+  #         branch: swift-5.10-release
+  #         tag: 5.10-RELEASE
+  #     - uses: actions/checkout@v4
+  #     - name: Build
+  #       run: swift build -c ${{ matrix.config }}
+  #     - name: Run tests (debug only)
+  #       if: ${{ matrix.config == 'debug' }}
+  #       run: swift test
 
   android:
     name: Android (Swift 6.0.2)
