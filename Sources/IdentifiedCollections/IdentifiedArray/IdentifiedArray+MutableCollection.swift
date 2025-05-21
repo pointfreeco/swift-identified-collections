@@ -188,7 +188,7 @@ extension IdentifiedArray where Element: Comparable {
   public mutating func sort() {
     self.sort(by: <)
   }
-  
+
   /// Returns a sorted copy of the collection.
   ///
   /// You can sort an ordered set of elements that conform to the `Comparable` protocol by calling
