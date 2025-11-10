@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.9
 
 import PackageDescription
 
@@ -32,9 +32,15 @@ let package = Package(
         .product(name: "CollectionsBenchmark", package: "swift-collections-benchmark"),
       ]
     ),
-  ],
-  swiftLanguageModes: [.v6]
+  ]
 )
+
+for target in package.targets {
+  target.swiftSettings = target.swiftSettings ?? []
+  target.swiftSettings!.append(contentsOf: [
+    .enableExperimentalFeature("StrictConcurrency")
+  ])
+}
 
 #if !os(Windows)
   // DocC needs to be ported to Windows
