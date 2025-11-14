@@ -93,7 +93,7 @@ final class IdentifiedArrayTests: XCTestCase {
     XCTAssertThrowsError(
       try JSONDecoder().decode(IdentifiedArrayOf<Int>.self, from: Data("[1,1,1]".utf8))
     ) { error in
-      guard case let DecodingError.dataCorrupted(ctx) = error
+      guard case DecodingError.dataCorrupted(let ctx) = error
       else { return XCTFail() }
       XCTAssertEqual(ctx.debugDescription, "Duplicate element at offset 1")
     }
