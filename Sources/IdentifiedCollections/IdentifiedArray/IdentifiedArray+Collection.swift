@@ -1,4 +1,4 @@
-import OrderedCollections
+public import OrderedCollections
 
 extension IdentifiedArray: Collection {
   @inlinable

@@ -1,4 +1,4 @@
-import OrderedCollections
+public import OrderedCollections
 
 /// An ordered collection of identifiable elements.
 ///

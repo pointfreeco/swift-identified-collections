@@ -1,4 +1,4 @@
-import OrderedCollections
+public import OrderedCollections
 
 extension IdentifiedArray {
   /// Append a new member to the end of the array, if the array doesn't already contain it.
