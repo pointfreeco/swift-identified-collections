@@ -14,7 +14,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Foundation
+public import Foundation
 
 extension IdentifiedArray {  // : MutableCollection
   /// Moves all the elements at the specified offsets to the specified destination offset,

@@ -1,4 +1,4 @@
-import OrderedCollections
+public import OrderedCollections
 
 extension IdentifiedArray: _IdentifiedCollection {
   /// A read-only collection view for the ids contained in this array, as an `OrderedSet`.

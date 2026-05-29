@@ -59,7 +59,7 @@ extension IdentifiedArray: TestCollection where Element: Identifiable, Element.I
 private func assertElementsEqual<Result>(
   after operation: (inout (any TestCollection<Item>)) -> Result,
   setUp: () -> Void = {},
-  file: StaticString = #file,
+  filePath: StaticString = #filePath,
   line: UInt = #line
 ) {
   for n in 0...10 {
@@ -79,7 +79,7 @@ private func assertElementsEqual<Result>(
         """
         (\(anyIdentifiedArray)) does not equal control (\(anyArray))
         """,
-        file: file,
+        file: filePath,
         line: line
       )
       identifiedArray = anyIdentifiedArray as! IdentifiedArrayOf<Item>
@@ -88,13 +88,13 @@ private func assertElementsEqual<Result>(
         """
         (\(identifiedArray.ids)) keys does not equal IDs (\(identifiedArray.map(\.id)))
         """,
-        file: file,
+        file: filePath,
         line: line
       )
       if let lhs = lhs as? any Equatable {
         func open<LHS: Equatable>(_ lhs: LHS) {
           if let rhs = rhs as? LHS {
-            XCTAssertEqual(lhs, rhs, file: file, line: line)
+            XCTAssertEqual(lhs, rhs, file: filePath, line: line)
           }
         }
         open(lhs)

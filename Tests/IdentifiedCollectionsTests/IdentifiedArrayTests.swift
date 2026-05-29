@@ -1,3 +1,4 @@
+import OrderedCollections
 import XCTest
 
 @testable import IdentifiedCollections
@@ -197,7 +198,10 @@ final class IdentifiedArrayTests: XCTestCase {
           uniqueElements: [
             Model(id: 1, data: "AAAA"),
             Model(id: 2, data: "B"),
-          ], id: \.id))
+          ],
+          id: \.id
+        )
+      )
     }
   }
 
